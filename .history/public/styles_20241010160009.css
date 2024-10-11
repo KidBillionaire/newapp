@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  #userTable {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+  }
+  
+  #userTable th, #userTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  #userTable th {
+    background-color: #333;
+    color: white;
+  }
+  
+  button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  // <Monte>: Use a unique and descriptive class name
+// <weight>: Use a value from 100 to 900
+.montserrat-title 
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+  
+  
+  .montserrat-body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+  }  

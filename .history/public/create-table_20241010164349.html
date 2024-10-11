@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Poker Table</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="/js/createTable.js"></script>
+</head>
+<body class="create-table-page">
+    <div>
+        <h1>Create a Poker Table</h1>
+        <form id="createTableForm">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" placeholder="Enter table name" required>
+            <br><br>
+
+            <label for="numSeats">Number of Seats:</label>
+            <select id="numSeats">
+                <option value="2">2 Seats</option>
+                <option value="6">6 Seats</option>
+                <option value="10">10 Seats</option>
+            </select>
+            <br><br>
+
+            <label for="tableType">Table Type:</label>
+            <select id="tableType">
+                <option value="cash">Cash Game</option>
+                <option value="tournament">Tournament</option>
+            </select>
+            <br><br>
+
+            <button type="submit">Create Table</button>
+        </form>
+    </div>
+
+    <!-- Poker Table Container -->
+    <div id="pokerTableContainer">
+        <div id="pokerTable">
+            <div class="seat" id="seat1"></div>
+            <div class="seat" id="seat2"></div>
+            <div class="seat" id="seat3"></div>
+            <div class="seat" id="seat4"></div>
+            <div class="seat" id="seat5"></div>
+            <div class="seat" id="seat6"></div>
+            <div class="seat" id="seat7"></div>
+            <div class="seat" id="seat8"></div>
+            <div class="seat" id="seat9"></div>
+            <div class="seat" id="seat10"></div>
+        </div>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar Circle</title>
+    <style>
+        .circle-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border: 1px solid #000;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background-color: #f00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="circle-container">
+        <div class="avatar">1</div>
+        <div class="avatar">2</div>
+        <div class="avatar">3</div>
+        <div class="avatar">4</div>
+    </div>
+
+    <script>
+        const container = document.querySelector('.circle-container');
+        const avatars = document.querySelectorAll('.avatar');
+
+        if (avatars.length > 0) {
+            const radius = 140;
+            const centerX = container.offsetWidth / 2;
+            const centerY = container.offsetHeight / 2;
+
+            avatars.forEach((avatar, index) => {
+                const angle = (index / avatars.length) * (2 * Math.PI);
+                const x = radius * Math.cos(angle);
+                const y = radius * Math.sin(angle);
+
+                avatar.style.left = `${centerX + x - (avatar.offsetWidth / 2)}px`;
+                avatar.style.top = `${centerY + y - (avatar.offsetHeight / 2)}px`;
+            });
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar Circle</title>
+    <style>
+        .circle-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border: 1px solid #000;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background-color: #f00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="circle-container">
+        <div class="avatar">1</div>
+        <div class="avatar">2</div>
+        <div class="avatar">3</div>
+        <div class="avatar">4</div>
+    </div>
+
+    <script>
+        const container = document.querySelector('.circle-container');
+        const avatars = document.querySelectorAll('.avatar');
+
+        if (avatars.length > 0) {
+            const radius = 140;
+            const centerX = container.offsetWidth / 2;
+            const centerY = container.offsetHeight / 2;
+
+            avatars.forEach((avatar, index) => {
+                const angle = (index / avatars.length) * (2 * Math.PI);
+                const x = radius * Math.cos(angle);
+                const y = radius * Math.sin(angle);
+
+                avatar.style.left = `${centerX + x - (avatar.offsetWidth / 2)}px`;
+                avatar.style.top = `${centerY + y - (avatar.offsetHeight / 2)}px`;
+            });
+        }
+    </script>
+</body>
+</html>

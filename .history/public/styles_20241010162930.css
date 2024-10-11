@@ -1,0 +1,208 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#userTable {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+#userTable th,
+#userTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#userTable th {
+    background-color: #333;
+    color: white;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+    /* Darker background */
+    color: #fff;
+    /* White text */
+}
+
+
+.montserrat-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    /* strong title font */
+}
+
+.montserrat-body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    /* normal body font */
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+:root {
+    --primary-color: #333;
+    --secondary-color: #007BFF;
+    --background: #f7f9fc;
+}
+
+body {
+    background: var(--background);
+    color: var(--primary-color);
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Profile Settings Section */
+#profileSettings {
+    margin: 20px auto;
+    width: 50%;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+#profileSettings label {
+    display: inline-block;
+    width: 150px;
+}
+
+#profileSettings input {
+    width: calc(100% - 160px);
+    padding: 8px;
+    margin: 8px 0;
+}
+
+#profileSettings button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+/* Create a specific class for the Create Poker Table page background */
+.create-table-page {
+    background-image: url('images/vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg'); /* Set background image */
+    background-size: cover;         /* Scale the image to cover the entire page */
+    background-repeat: no-repeat;   /* Prevent tiling */
+    background-position: center;    /* Center the background */
+    background-attachment: fixed;   /* Make the background fixed during scroll */
+    padding: 20px;
+    height: 100vh;                  /* Set height to fill the entire view height */
+    display: flex;                  /* Use flexbox for centering */
+    justify-content: center;        /* Center content horizontally */
+    align-items: center;            /* Center content vertically */
+  }
+  
+  .create-table-page::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5); /* Dark overlay */
+    z-index: -1; /* Ensure it stays behind other elements */
+  }
+  /* Container for the poker table */
+#pokerTableContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  /* Style the poker table */
+  #pokerTable {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%; /* Make the table circular */
+    background: url('images/vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg') center/cover; /* Set background image */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Generic seat style */
+  .seat {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Seat positions */
+  .seat-top { top: 10px; left: 50%; transform: translateX(-50%); }
+  .seat-right { top: 50%; right: 10px; transform: translateY(-50%); }
+  .seat-bottom { bottom: 10px; left: 50%; transform: translateX(-50%); }
+  .seat-left { top: 50%; left: 10px; transform: translateY(-50%); }
+  
+  .seat-top-right { top: 30px; right: 30px; }
+  .seat-bottom-right { bottom: 30px; right: 30px; }
+  .seat-bottom-left { bottom: 30px; left: 30px; }
+  .seat-top-left { top: 30px; left: 30px; }
+  
+  .seat-top-center { top: 20px; left: 30%; }
+  .seat-bottom-center { bottom: 20px; left: 30%; }
+  /* styles.css */
+
+.create-table-page {
+    background-image: url('images/vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg') center/cover; /* Set background image */
+    background-size: cover;
+}
+
+#pokerTable {
+    position: relative; /* To position seats correctly */
+    width: 400px; /* Width of the poker table */
+    height: 200px; /* Height of the poker table */
+    margin: 20px auto; /* Center the poker table */
+    border: 2px solid green; /* Border for the poker table */
+    border-radius: 20px; /* Rounded corners */
+}
+
+.seat {
+    display: none; /* Initially hide all seats */
+    width: 40px; /* Width of each seat */
+    height: 40px; /* Height of each seat */
+    background-color: #FFF; /* Seat color */
+    border: 1px solid #000; /* Seat border */
+    position: absolute; /* To position seats */
+}
+
+/* Add seat positioning styles here (seat-top, seat-bottom, etc.) */

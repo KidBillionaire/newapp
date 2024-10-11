@@ -1,0 +1,22 @@
+{
+  "name": "LEarningToCode",
+  "version": "1.0.0",
+  "description": "Poker app testing setup",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test-backend": "mocha tests/backend/**/*.test.js",
+    "test-frontend": "mocha tests/frontend/**/*.test.js",
+    "test": "npm run test-backend && npm run test-frontend",
+    "cypress": "cypress open"
+  },
+  "author": "Colby",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "cypress": "^9.7.0",
+    "jest": "^27.4.7",
+    "jsdom": "^19.0.0",
+    "mocha": "^9.2.2"
+  }
+}

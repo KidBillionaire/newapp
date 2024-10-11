@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bluff Royale - Poker Lobby</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      background-color: #0d0d0d;
+      color: #e0e0e0;
+      font-family: 'Helvetica Neue', sans-serif;
+      margin: 0;
+    }
+
+    /* Lobby Container */
+    .lobby-container {
+      padding: 40px 20px;
+    }
+
+    /* Header */
+    .lobby-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .lobby-header h1 {
+      font-size: 3rem;
+      color: #ffffff;
+    }
+
+    /* How It Works Section */
+    .how-it-works-section {
+      padding: 60px 20px;
+      text-align: center;
+      background-color: #0d0d0d;
+      margin-bottom: 40px;
+    }
+
+    .how-it-works-section h2 {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .how-it-works-section p {
+      font-size: 1.2rem;
+      color: #e0e0e0;
+      max-width: 800px;
+      margin: 0 auto 20px;
+    }
+
+    .how-it-works-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .how-it-works-card {
+      background-color: #1a1a1a;
+      padding: 30px;
+      border-radius: 15px;
+      width: 300px;
+      color: #f5f5f5;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .how-it-works-card:hover {
+      transform: scale(1.05);
+    }
+
+    .how-it-works-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #ff4d4d;
+    }
+
+    /* Table List */
+    .table-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .table-card {
+      background-color: #1a1a1a;
+      width: 300px;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s;
+    }
+
+    .table-card:hover {
+      transform: scale(1.05);
+    }
+
+    .table-card h3 {
+      color: #ff4d4d;
+      margin-bottom: 10px;
+    }
+
+    .table-card p {
+      color: #cccccc;
+      margin-bottom: 15px;
+    }
+
+    .join-button {
+      background-color: #262626;
+      border: 2px solid #595959;
+      color: #e0e0e0;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-transform: uppercase;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .join-button:hover {
+      background-color: #595959;
+      color: #ffffff;
+    }
+
+    /* Ranking Section */
+    .ranking-section {
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 40px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .ranking-section h2 {
+      color: #ff4d4d;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .ranking-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .ranking-table th,
+    .ranking-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #595959;
+    }
+
+    .ranking-table th {
+      background-color: #262626;
+      color: #ffffff;
+    }
+
+    .ranking-table tr:hover {
+      background-color: #333333;
+    }
+
+    /* Deposit Button */
+    .deposit-button {
+      background-color: #ff4d4d;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    .deposit-button:hover {
+      background-color: #e60000;
+    }
+
+    /* Deposit Modal Styles */
+    .modal-content {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    .modal-header, .modal-footer {
+      border: none;
+    }
+
+    .modal-header h5 {
+      color: #ff4d4d;
+    }
+
+    .form-control {
+      background-color: #262626;
+      border: 1px solid #595959;
+      color: #e0e0e0;
+    }
+
+    .form-control:focus {
+      background-color: #262626;
+      color: #e0e0e0;
+    }
+
+    .btn-confirm-deposit {
+      background-color: #ff4d4d;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .btn-confirm-deposit:hover {
+      background-color: #e60000;
+    }
+
+    /* Tabs Styles */
+    .lobby-navigation {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .nav-tabs .nav-link {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      border: 1px solid #595959;
+      margin: 0 5px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-tabs .nav-link.active {
+      background-color: #ff4d4d;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Lobby Container -->
+  <div class="lobby-container container-fluid">
+    <!-- Header -->
+    <div class="lobby-header">
+      <h1>Welcome to Bluff Royale Lobby</h1>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="how-it-works-section">
+      <h2>How Bluff Royale Works</h2>
+      <p>Bluff Royale brings a unique twist to online poker by combining FaceTime video interaction with real-money sweepstakes. Here’s how it works:</p>
+      <div class="how-it-works-cards">
+        <div class="how-it-works-card">
+          <h3>Step 1: Sign Up</h3>
+          <p>Create your account quickly and easily. All you need is an email address and a password to get started.</p>
+        </div>
+        <div class="how-it-works-card">
+          <h3>Step 2: Join a Table</h3>
+          <p>Once signed in, browse through available poker tables. You can join a table that fits your style and start playing with other real players via live video.</p>
+        </div>
+        <div class="how-it-works-card">
+          <h3>Step 3: FaceTime Poker</h3>
+          <p>Engage with other players in real-time using FaceTime-style video feeds. Bluff, read your opponents, and enjoy the thrill of a real poker experience from anywhere.</p>
+        </div>
+        <div class="how-it-works-card">
+          <h3>Step 4: Win Big</h3>
+          <p>Participate in real-money sweepstakes as you play. Every game is an opportunity to win cash prizes and take your poker skills to the next level!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table List -->
+    <div class="table-list">
+      <!-- Table Card Example -->
+      <div class="table-card">
+        <h3>Table 1</h3>
+        <p>Blinds: $1/$2</p>
+        <p>Players: 5/6</p>
+        <button class="join-button" onclick="joinTable(1)">Join Table</button>
+      </div>
+      <!-- Additional table cards can be added here -->
+    </div>
+
+    <!-- Ranking Section -->
+    <div class="ranking-section">
+      <h2>Top Players</h2>
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th class="rank">#</th>
+            <th>Player</th>
+            <th>Wins</th>
+            <th>Win Rate</th>
+          </tr>
+        </thead>
+        <tbody id="rankingTableBody">
+          <!-- Top players will be populated here -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Deposit Button and Modal -->
+    <button class="deposit-button" data-bs-toggle="modal" data-bs-target="#depositModal">Deposit Funds</button>
+    <div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Deposit Funds</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="depositForm">
+              <div class="mb-3">
+                <label for="depositAmount" class="form-label">Amount to Deposit ($)</label>
+                <input type="number" class="form-control" id="depositAmount" min="1" required>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn-confirm-deposit" onclick="confirmDeposit()">Confirm Deposit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs for Game Modes -->
+    <nav class="lobby-navigation">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="#tournaments" data-bs-toggle="tab">Tournaments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#cashGames" data-bs-toggle="tab">Cash Games</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="tab-content">
+      <!-- Cash Games Tab Pane -->
+      <div class="tab-pane fade" id="cashGames">
+        <p>Cash games content will go here...</p>
+      </div>
+
+      <!-- Tournaments Tab Pane -->
+      <div class="tab-pane fade show active" id="tournaments">
+        <div class="tournament-list">
+          <!-- Tournament Cards will be generated here -->
+          <p>Tournament content will go here...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Join Table Function
+    function joinTable(tableId) {
+      alert('Joining Table ' + tableId);
+      // Implement the logic to join the table
+    }
+
+    // Confirm Deposit Function
+    function confirmDeposit() {
+      const amount = document.getElementById('depositAmount').value;
+
+      if (!amount || amount <= 0) {
+        alert('Please enter a valid deposit amount.');
+        return;
+      }
+
+      alert(`You have requested to deposit $${amount}.`);
+      
+      // Reset form and close modal
+      document.getElementById('depositForm').reset();
+      const depositModal = bootstrap.Modal.getInstance(document.getElementById('depositModal'));
+      depositModal.hide();
+
+      // TODO: Implement actual payment processing securely on the server side
+    }
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

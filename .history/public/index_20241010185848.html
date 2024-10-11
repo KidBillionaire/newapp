@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Poker Hands</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="/js/app.js"></script>
+  <style>
+    /* CSS Variables, General Styles and other styles as mentioned above */
+  </style>
+</head>
+<body>
+  <h1>User Poker Hands</h1>
+  
+  <!-- Button to toggle settings -->
+  <button id="profileSettingsButton">Show Profile Settings</button>
+
+  <table id="userTable" border="1">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Poker Hands</th>
+        <th>Total Wins</th>
+        <th>Total Losses</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- Profile Settings Section (Initially Hidden) -->
+  <div id="profileSettings" class="hidden">
+    <h2>Profile Settings</h2>
+    <form id="profileForm">
+      <label for="newUsername">New Username:</label>
+      <input type="text" id="newUsername" placeholder="Enter new username">
+      ...
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+  <br>
+  <a href="create-table.html">Create a New Poker Table</a>
+
+  <script>
+    // JavaScript for toggling settings visibility as mentioned above
+  </script>
+</body>
+</html>

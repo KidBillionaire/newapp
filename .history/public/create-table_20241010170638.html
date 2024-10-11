@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create an Oval Poker Table</title>
+    <style>
+        /* Main Page Styles */
+        body.create-table-page {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin: 20px auto;
+            width: 300px;
+        }
+
+        label, select, input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        /* Poker Table Styles */
+        #pokerTableContainer {
+            margin: 30px auto;
+            width: 800px; /* Adjusted width for oval */
+            height: 500px; /* Adjusted height for oval */
+            background-image: url('/images/vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg');
+            background-size: cover;
+            border-radius: 50% / 25%; /* Create an oval shape */
+            position: relative;
+        }
+
+        .seat {
+            width: 50px;
+            height: 50px;
+            background-color: #f00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: absolute;
+        }
+    </style>
+</head>
+<body class="create-table-page">
+    <div>
+        <h1>Create a Poker Table</h1>
+        <form id="createTableForm">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" placeholder="Enter table name" required>
+            <br><br>
+
+            <label for="numSeats">Number of Seats:</label>
+            <select id="numSeats">
+                <option value="2">2 Seats</option>
+                <option value="6">6 Seats</option>
+                <option value="10">10 Seats</option>
+            </select>
+            <br><br>
+
+            <label for="tableType">Table Type:</label>
+            <select id="tableType">
+                <option value="cash">Cash Game</option>
+                <option value="tournament">Tournament</option>
+            </select>
+            <br><br>
+
+            <button type="submit">Create Table</button>
+        </form>
+    </div>
+
+    <!-- Poker Table Container -->
+    <div id="pokerTableContainer">
+        <!-- The seats will be dynamically positioned based on the number of players -->
+    </div>
+
+    <script>
+        // Create Table Functionality
+        const createTableForm = document.getElementById('createTableForm');
+        const pokerTableContainer = document.getElementById('pokerTableContainer');
+
+        createTableForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Clear any existing seats
+            pokerTableContainer.innerHTML = '';
+
+            // Get the number of seats from the dropdown
+            const numSeats = parseInt(document.getElementById('numSeats').value);
+
+            // Create seats and position them around the oval table
+            const xRadius = 350; // Radius for the x-axis (width)
+            const yRadius = 200; // Radius for the y-axis (height)
+            const centerX = pokerTableContainer.offsetWidth / 2;
+            const centerY = pokerTableContainer.offsetHeight / 2;
+
+            for (let i = 0; i < numSeats; i++) {
+                const seat = document.createElement('div');
+                seat.className = 'seat';
+                seat.textContent = i + 1; // Seat number
+                pokerTableContainer.appendChild(seat);
+
+                // Calculate position using an oval formula
+                const angle = (i / numSeats) * (2 * Math.PI); // Spread evenly around the oval
+                const x = centerX + xRadius * Math.cos(angle) - (seat.offsetWidth / 2);
+                const y = centerY + yRadius * Math.sin(angle) - (seat.offsetHeight / 2);
+
+                // Apply positioning
+                seat.style.left = `${x}px`;
+                seat.style.top = `${y}px`;
+            }
+        });
+    </script>
+</body>
+</html>

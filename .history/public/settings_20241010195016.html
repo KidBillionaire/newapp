@@ -1,0 +1,93 @@
+<div class="profile-container">
+    <!-- User Info Section -->
+    <div class="user-info">
+      <div class="profile-picture">
+        <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile picture">
+        <div class="level-badge">15</div>
+        <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" hidden />
+        <label for="imageUpload" class="upload-button">
+          <i class="fas fa-camera"></i>
+        </label>
+      </div>
+    </div>
+  
+    <!-- Statistics Section -->
+    <div class="section statistics">
+      <h2>Statistics</h2>
+      <div class="stats-grid d-flex flex-wrap justify-content-between">
+        <div class="stat-item">
+          <h3>Games Played</h3>
+          <p>320</p>
+        </div>
+        <div class="stat-item">
+          <h3>Win Rate</h3>
+          <p>62%</p>
+        </div>
+        <div class="stat-item">
+          <h3>Total Winnings</h3>
+          <p>$12,500</p>
+        </div>
+        <div class="stat-item">
+          <h3>Best Hand</h3>
+          <p>Royal Flush</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Transaction History -->
+    <div class="section transaction-history">
+      <h2>Transaction History</h2>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Balance After</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2023-09-15</td>
+              <td>Deposit</td>
+              <td>$500</td>
+              <td>$1,250</td>
+            </tr>
+            <tr>
+              <td>2023-09-10</td>
+              <td>Withdrawal</td>
+              <td>$200</td>
+              <td>$750</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <!-- Settings Section -->
+    <div class="section settings">
+      <h2>Account Settings</h2>
+      <form id="settingsForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" value="player1@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Change Password</label>
+          <input type="password" id="password" placeholder="New Password">
+        </div>
+        <div class="form-group">
+          <label for="notifications">Notification Preferences</label>
+          <select id="notifications">
+            <option value="all">All Notifications</option>
+            <option value="email">Email Only</option>
+            <option value="sms">SMS Only</option>
+            <option value="none">No Notifications</option>
+          </select>
+        </div>
+        <button type="button" class="save-button" onclick="saveSettings()">Save Changes</button>
+      </form>
+    </div>
+  </div>
+  

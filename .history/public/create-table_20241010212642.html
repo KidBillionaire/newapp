@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Poker Table</title>
+    <style>
+        /* Main Page Styles */
+        body.create-table-page {
+            font-family: 'Arial', sans-serif;
+            background-color: #222; /* Dark background for contrast */
+            color: #f0f0f0; /* Light font color */
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #f7d358; /* Golden color */
+        }
+
+        form {
+            margin: 20px auto;
+            width: 300px;
+        }
+
+        label, select, input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        #dealCardsButton {
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            text-align: center;
+            border: none;
+            background: #333;
+            color: #f7d358;
+            border-radius: 8px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        #dealCardsButton:hover {
+            background: #f7d358;
+            color: #333;
+        }
+
+        /* Poker Table Styles */
+        #pokerTableContainer {
+            margin: 30px auto;
+            width: 800px;
+            height: 500px;
+            background-image: url('/images/vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg');
+            background-size: cover;
+            border-radius: 50% / 25%; /* Oval shape */
+            position: relative;
+        }
+
+        .seat {
+            width: 50px;
+            height: 50px;
+            background-color: #ff6347;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: absolute;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .seat:hover {
+            background-color: #ffd700; /* Highlight on hover */
+        }
+
+        .seat.occupied {
+            background-color: #4caf50; /* Occupied seat color */
+            cursor: not-allowed;
+        }
+
+        /* Fancy Card Styles */
+        .card {
+            width: 60px;
+            height: 80px;
+            background: #fff;
+            border-radius: 8px;
+            border: 2px solid #333;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            transform: translate(-50%, -50%) scale(0); /* Start with scale 0 */
+            transition: transform 0.4s ease-out; /* Smooth animation */
+        }
+
+        .card.deal {
+            transform: translate(-50%, -50%) scale(1); /* Scale up on deal */
+        }
+    </style>
+</head>
+<body class="create-table-page">
+    <div>
+        <h1>Create a Poker Table</h1>
+        <form id="createTableForm">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" placeholder="Enter table name" required>
+            <br><br>
+
+            <label for="numSeats">Number of Seats:</label>
+            <select id="numSeats">
+                <option value="2">2 Seats</option>
+                <option value="6">6 Seats</option>
+                <option value="10">10 Seats</option>
+            </select>
+            <br><br>
+
+            <label for="tableType">Table Type:</label>
+            <select id="tableType">
+                <option value="cash">Cash Game</option>
+                <option value="tournament">Tournament</option>
+            </select>
+            <br><br>
+
+            <button type="submit">Create Table</button>
+        </form>
+    </div>
+
+    <div id="dealCardsButton" style="display: none;">Deal 5 Cards</div>
+
+    <!-- Poker Table Container -->
+    <div id="pokerTableContainer">
+        <!-- The seats and cards will be dynamically positioned based on user actions -->
+    </div>
+
+    <script>
+        const createTableForm = document.getElementById('createTableForm');
+        const pokerTableContainer = document.getElementById('pokerTableContainer');
+        const dealCardsButton = document.getElementById('dealCardsButton');
+        let currentPlayer = null;
+        const players = {}; // Store player info for each seat
+
+        // Create a poker table when form is submitted
+        createTableForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            pokerTableContainer.innerHTML = ''; // Clear existing seats
+
+            const numSeats = parseInt(document.getElementById('numSeats').value);
+            const xRadius = 350;
+            const yRadius = 200;
+            const centerX = pokerTableContainer.offsetWidth / 2;
+            const centerY = pokerTableContainer.offsetHeight / 2;
+
+            for (let i = 0; i < numSeats; i++) {
+                const seat = document.createElement('div');
+                seat.className = 'seat';
+                seat.textContent = `Seat ${i + 1}`;
+                seat.setAttribute('data-seat', i + 1);
+                seat.addEventListener('click', handleSeatClick); // Assign click event to each seat
+                pokerTableContainer.appendChild(seat);
+
+                const angle = (i / numSeats) * (2 * Math.PI);
+                const x = centerX + xRadius * Math.cos(angle) - (seat.offsetWidth / 2);
+                const y = centerY + yRadius * Math.sin(angle) - (seat.offsetHeight / 2);
+
+                seat.style.left = `${x}px`;
+                seat.style.top = `${y}px`;
+            }
+
+            dealCardsButton.style.display = 'block'; // Show the deal button
+        });
+
+        // Handle seat click
+        function handleSeatClick(event) {
+            const seat = event.target;
+            if (seat.classList.contains('occupied')) return; // Skip if seat is occupied
+
+            const seatNumber = seat.getAttribute('data-seat');
+            const playerName = prompt('Enter player name:');
+            if (playerName) {
+                seat.textContent = playerName;
+                seat.classList.add('occupied');
+                players[seatNumber] = playerName; // Store player info in the seat
+                currentPlayer = playerName; // Set current player
+            }
+        }
+
+        // Function to handle card dealing and animation
+        dealCardsButton.addEventListener('click', function() {
+            const existingCards = document.querySelectorAll('.card');
+            existingCards.forEach(card => card.remove()); // Clear any previous cards
+
+            const centerX = pokerTableContainer.offsetWidth / 2;
+            const centerY = pokerTableContainer.offsetHeight / 2;
+
+            // Create and deal 5 cards only if there are players
+            const cardValues = ['A♠', 'K♣', '10♦', '7♥', 'J♠']; // Sample values
+            const playerSeats = Object.keys(players); // Get seat numbers of players
+
+            if (playerSeats.length === 0) {
+                alert("No players are seated. Add players to deal cards.");
+                return;
+            }
+
+            cardValues.forEach((value, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.textContent = value;
+                pokerTableContainer.appendChild(card);
+
+                // Position cards with spacing around the center of the table
+                card.style.left = `${centerX - 150 + index * 75}px`;
+                card.style.top = `${centerY - 40}px`;
+
+                // Trigger the deal animation
+                setTimeout(() => {
+                    card.classList.add('deal');
+                }, index * 200); // Stagger by 200ms each
+            });
+        });
+    </script>
+</body>
+</html>

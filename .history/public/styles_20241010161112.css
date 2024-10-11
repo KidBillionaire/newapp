@@ -1,0 +1,112 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#userTable {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+#userTable th,
+#userTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#userTable th {
+    background-color: #333;
+    color: white;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+    /* Darker background */
+    color: #fff;
+    /* White text */
+}
+
+
+.montserrat-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    /* strong title font */
+}
+
+.montserrat-body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    /* normal body font */
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+:root {
+    --primary-color: #333;
+    --secondary-color: #007BFF;
+    --background: #f7f9fc;
+}
+
+body {
+    background: var(--background);
+    color: var(--primary-color);
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Profile Settings Section */
+#profileSettings {
+    margin: 20px auto;
+    width: 50%;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+#profileSettings label {
+    display: inline-block;
+    width: 150px;
+}
+
+#profileSettings input {
+    width: calc(100% - 160px);
+    padding: 8px;
+    margin: 8px 0;
+}
+
+#profileSettings button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}

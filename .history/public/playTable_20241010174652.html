@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Poker Table</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="tableNameHeading">Poker Table</h1>
+        
+        <!-- Poker Table Container -->
+        <div id="pokerTableContainer">
+            <!-- Community Cards Container -->
+            <div id="communityCardsContainer">
+                <div class="community-card" id="card1"></div>
+                <div class="community-card" id="card2"></div>
+                <div class="community-card" id="card3"></div>
+                <div class="community-card" id="card4"></div>
+                <div class="community-card" id="card5"></div>
+            </div>
+        </div>
+
+        <!-- Player Hand and AI Hand Containers -->
+        <div id="playerHandContainer">
+            <h3>Your Hand:</h3>
+            <div id="playerHand" class="hand-container"></div>
+        </div>
+        <div id="aiHandContainer">
+            <h3>AI Hand:</h3>
+            <div id="aiHand" class="hand-container"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div id="actionsContainer">
+            <button id="dealButton">Deal</button>
+            <button id="betButton" disabled>Bet</button>
+            <button id="callButton" disabled>Call</button>
+            <button id="foldButton" disabled>Fold</button>
+            <button id="checkButton" disabled>Check</button>
+        </div>
+
+        <!-- Player Information and Pot Display -->
+        <div id="playerInfo">
+            <h3 id="currentPot">Pot: $0</h3>
+            <p id="playerChips">Player Chips: $1000</p>
+            <p id="aiChips">AI Chips: $1000</p>
+        </div>
+    </div>
+
+    <!-- JavaScript for Game Logic -->
+    <script>
+        // Grab references to HTML elements
+        const pokerTableContainer = document.getElementById('pokerTableContainer');
+        const dealButton = document.getElementById('dealButton');
+        const betButton = document.getElementById('betButton');
+        const callButton = document.getElementById('callButton');
+        const foldButton = document.getElementById('foldButton');
+        const checkButton = document.getElementById('checkButton');
+        const currentPotDisplay = document.getElementById('currentPot');
+        const playerChipsDisplay = document.getElementById('playerChips');
+        const aiChipsDisplay = document.getElementById('aiChips');
+        const communityCards = document.querySelectorAll('.community-card');
+
+        // Game State Variables
+        let playerChips = 1000;
+        let aiChips = 1000;
+        let pot = 0;
+        let playerHand = [];
+        let aiHand = [];
+        let currentCardIndex = 3; // Start at 3 since the first 3 are already dealt in the flop
+
+        // Function to update the Pot display
+        function updatePotDisplay() {
+            currentPotDisplay.textContent = `Pot: $${pot}`;
+        }
+
+        // Function to handle dealing cards
+        function dealCards() {
+            dealButton.disabled = true; // Disable Deal button after dealing
+            pot = 0; // Reset the pot
+            currentCardIndex = 3; // Reset card index for a new round
+
+            // Deal hands to player and AI
+            playerHand = [randomCard(), randomCard()];
+            aiHand = [randomCard(), randomCard()];
+
+            console.log(`Your hand: ${playerHand.join(', ')}`);
+            console.log(`AI hand: ${aiHand.join(', ')}`);
+
+            // Display player hand
+            const playerHandContainer = document.getElementById('playerHand');
+            playerHandContainer.innerHTML = ''; // Clear any previous cards
+            playerHand.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'hole-card';
+                cardElement.textContent = card;
+                playerHandContainer.appendChild(cardElement);
+            });
+
+            // Display AI hand (face-down)
+            const aiHandContainer = document.getElementById('aiHand');
+            aiHandContainer.innerHTML = ''; // Clear any previous cards
+            aiHand.forEach(() => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'hole-card face-down';
+                cardElement.textContent = '??';
+                aiHandContainer.appendChild(cardElement);
+            });
+
+            // Show the flop cards (after a short delay for visual effect)
+            setTimeout(() => {
+                communityCards[0].textContent = randomCard();
+                communityCards[1].textContent = randomCard();
+                communityCards[2].textContent = randomCard();
+                communityCards[0].classList.add('deal');
+                communityCards[1].classList.add('deal');
+                communityCards[2].classList.add('deal');
+
+                enablePlayerActions(); // Enable actions after flop
+                updatePotDisplay(); // Reset pot display
+            }, 1000);
+        }
+
+        // Function to reveal the next community card
+        function revealNextCommunityCard() {
+            if (currentCardIndex < communityCards.length) {
+                communityCards[currentCardIndex].textContent = randomCard(); // Deal next card
+                communityCards[currentCardIndex].classList.add('deal'); // Show animation
+                currentCardIndex++; // Move to the next card
+                setTimeout(enablePlayerActions, 1000); // Re-enable player actions after dealing
+            } else {
+                console.log('All community cards have been dealt. Showdown time!');
+                showdown(); // Trigger showdown logic when all cards are revealed
+            }
+        }
+
+        // Enable player action buttons
+        function enablePlayerActions() {
+            betButton.disabled = false;
+            foldButton.disabled = false;
+            checkButton.disabled = false;
+            callButton.disabled = true;
+            console.log('Player actions enabled. Choose your move!');
+        }
+
+        // Simple random card generator
+        function randomCard() {
+            const suits = ['♥', '♦', '♣', '♠'];
+            const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+            const suit = suits[Math.floor(Math.random() * suits.length)];
+            const value = values[Math.floor(Math.random() * values.length)];
+            return `${value}${suit}`;
+        }
+
+        // Event Listeners
+        dealButton.addEventListener('click', dealCards);
+        betButton.addEventListener('click', () => {
+            const betAmount = 10; // Fixed bet amount for now
+            pot += betAmount; // Add the bet to the pot
+            playerChips -= betAmount;
+            updatePotDisplay();
+            playerChipsDisplay.textContent = `Player Chips: $${playerChips}`;
+            revealNextCommunityCard(); // Reveal next community card
+        });
+
+        foldButton.addEventListener('click', () => console.log('You folded!'));
+        checkButton.addEventListener('click', () => console.log('You checked!'));
+    </script>
+</body>
+</html>

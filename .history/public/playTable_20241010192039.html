@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Poker Table</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="tableNameHeading">Poker Table</h1>
+
+        <!-- Poker Table Container -->
+        <div id="pokerTableContainer">
+            <!-- Community Cards Container -->
+            <div id="communityCardsContainer">
+                <div class="community-card" id="card1"></div>
+                <div class="community-card" id="card2"></div>
+                <div class="community-card" id="card3"></div>
+                <div class="community-card" id="card4"></div>
+                <div class="community-card" id="card5"></div>
+            </div>
+        </div>
+
+        <!-- Player Hand and AI Hand Containers -->
+        <div id="playerHandContainer">
+            <h3>Your Hand:</h3>
+            <div id="playerHand" class="hand-container"></div>
+        </div>
+        <div id="aiHandContainer">
+            <h3>AI Hand:</h3>
+            <div id="aiHand" class="hand-container"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div id="actionsContainer">
+            <button id="dealButton">Deal</button>
+            <button id="betButton" disabled>Bet</button>
+            <button id="callButton" disabled>Call</button>
+            <button id="foldButton" disabled>Fold</button>
+            <button id="checkButton" disabled>Check</button>
+        </div>
+
+        <!-- Player Information and Pot Display -->
+        <div id="playerInfo">
+            <h3 id="currentPot">Pot: $0</h3>
+            <p id="playerChips">Player Chips: $1000</p>
+            <p id="aiChips">AI Chips: $1000</p>
+        </div>
+
+        <!-- Seat Container -->
+        <div id="pokerTableContainer">
+            <div id="seatsContainer">
+                <div class="seat" id="seat1" data-seat="1">Seat 1</div>
+                <div class="seat" id="seat2" data-seat="2">Seat 2</div>
+                <div class="seat" id="seat3" data-seat="3">Seat 3</div>
+                <div class="seat" id="seat4" data-seat="4">Seat 4</div>
+                <div class="seat" id="seat5" data-seat="5">Seat 5</div>
+                <div class="seat" id="seat6" data-seat="6">Seat 6</div>
+            </div>
+        </div>
+
+        <!-- Modal to enter user ID -->
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Enter Friend's User ID</h3>
+                <input type="text" id="userIdInput" placeholder="Enter User ID">
+                <button id="submitUserId">Submit</button>
+            </div>
+        </div>
+
+        <!-- Player Information Section -->
+        <div id="playerInfo">
+            <h3 id="currentPlayerName">Player Name: -</h3>
+            <p id="currentPlayerWins">Total Wins: -</p>
+            <p id="currentPlayerLosses">Total Losses: -</p>
+            <p id="currentPlayerChips">Chips: -</p>
+            <p id=""
+        </div>
+    </div>
+
+    <!-- JavaScript for Game Logic -->
+    <script>
+        // Get references to HTML elements
+        const pokerTableContainer = document.getElementById('pokerTableContainer');
+        const seats = document.querySelectorAll('.seat');
+        const userModal = document.getElementById('userModal');
+        const closeModal = document.querySelector('.close');
+        const submitUserIdButton = document.getElementById('submitUserId');
+        const userIdInput = document.getElementById('userIdInput');
+        const currentPlayerName = document.getElementById('currentPlayerName');
+        const currentPlayerWins = document.getElementById('currentPlayerWins');
+        const currentPlayerLosses = document.getElementById('currentPlayerLosses');
+
+        // Show modal when a seat is clicked
+        seats.forEach(seat => {
+            seat.addEventListener('click', () => {
+                userModal.style.display = 'block';
+                userIdInput.dataset.seat = seat.dataset.seat; // Store seat info in input for later use
+            });
+        });
+
+        // Close modal when the close button is clicked
+        closeModal.addEventListener('click', () => {
+            userModal.style.display = 'none';
+        });
+
+        // Handle submission of user ID
+        submitUserIdButton.addEventListener('click', async () => {
+            const userId = userIdInput.value.trim();
+            const seatNumber = userIdInput.dataset.seat;
+
+            if (!userId) {
+                alert('Please enter a User ID');
+                return;
+            }
+
+            // Fetch user data from the server
+            try {
+                const response = await fetch(`http://localhost:3000/users/${userId}`);
+                if (!response.ok) {
+                    alert('User not found');
+                    return;
+                }
+                const userData = await response.json();
+
+                // Update player information display
+                currentPlayerName.textContent = `Player Name: ${userData.username}`;
+                currentPlayerWins.textContent = `Total Wins: ${userData.totalWins}`;
+                currentPlayerLosses.textContent = `Total Losses: ${userData.totalLosses}`;
+
+                // Optionally mark the seat as occupied
+                const selectedSeat = document.querySelector(`.seat[data-seat="${seatNumber}"]`);
+                selectedSeat.textContent = userData.username;
+                selectedSeat.style.backgroundColor = '#00cc44'; // Change seat color
+
+                // Close the modal
+                userModal.style.display = 'none';
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                alert('Error fetching user data');
+            }
+        });
+    </script>
+
+    <!-- Modal Styling -->
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Poker Table</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Create a Poker Table</h1>
+        <form id="createTableForm">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" placeholder="Enter table name" required>
+            <br><br>
+
+            <label for="numSeats">Number of Seats:</label>
+            <select id="numSeats">
+                <option value="2">2 Seats</option>
+                <option value="6">6 Seats</option>
+                <option value="10">10 Seats</option>
+            </select>
+            <br><br>
+
+            <label for="tableType">Table Type:</label>
+            <select id="tableType">
+                <option value="cash">Cash Game</option>
+                <option value="tournament">Tournament</option>
+            </select>
+            <br><br>
+
+            <button type="submit">Create Table</button>
+        </form>
+    </div>
+
+    <div id="tableLinkContainer"></div> <!-- Container for the link to the play table page -->
+
+    <script>
+        const createTableForm = document.getElementById('createTableForm');
+        const tableLinkContainer = document.getElementById('tableLinkContainer');
+
+        createTableForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const tableName = document.getElementById('tableName').value;
+            const numSeats = document.getElementById('numSeats').value;
+            const tableType = document.getElementById('tableType').value;
+
+            // Store the table settings locally for now
+            localStorage.setItem('pokerTableName', tableName);
+            localStorage.setItem('numSeats', numSeats);
+            localStorage.setItem('tableType', tableType);
+
+            // Create a link to the play page
+            tableLinkContainer.innerHTML = `<a href="playTable.html" class="play-link">Go to the Table and Play</a>`;
+        });
+    </script>
+</body>
+</html>

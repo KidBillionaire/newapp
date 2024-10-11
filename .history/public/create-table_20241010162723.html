@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Poker Table</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #2c3e50; /* Dark background for contrast */
+        }
+
+        /* Poker Table Container */
+        #pokerTableContainer {
+            position: relative;
+            width: 80vw; /* Responsive width */
+            max-width: 800px; /* Maximum width */
+            aspect-ratio: 3; /* Maintain aspect ratio */
+            margin: 0 auto;
+        }
+
+        /* Poker Table */
+        #pokerTable {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background-color: #27ae60; /* Green felt color */
+            border-radius: 20px; /* Rounded corners for a table */
+            transform: translate(-50%, -50%);
+        }
+
+        /* Player Seats */
+        .seat {
+            position: absolute;
+            width: 60px; /* Seat width */
+            height: 60px; /* Seat height */
+            background-color: #e74c3c; /* Red for seats */
+            border-radius: 50%; /* Round seats */
+            border: 2px solid #fff; /* White border */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff; /* Seat text color */
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Positioning seats */
+        #seat1 { top: 10%; left: 50%; transform: translateX(-50%); }
+        #seat2 { top: 50%; right: 10%; transform: translateY(-50%); }
+        #seat3 { bottom: 10%; left: 50%; transform: translateX(-50%); }
+        #seat4 { top: 50%; left: 10%; transform: translateY(-50%); }
+        #seat5 { top: 10%; right: 15%; }
+        #seat6 { bottom: 10%; right: 15%; }
+        #seat7 { bottom: 10%; left: 15%; }
+        #seat8 { top: 10%; left: 15%; }
+        #seat9 { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        #seat10 { bottom: 50%; left: 50%; transform: translate(-50%, 50%); }
+
+        @media (max-width: 600px) {
+            /* Responsive adjustments */
+            .seat {
+                width: 40px; /* Smaller seats on mobile */
+                height: 40px;
+                font-size: 12px; /* Smaller text */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Poker Table Container -->
+    <div id="pokerTableContainer">
+        <div id="pokerTable">
+            <!-- Player Seats (Will be populated dynamically) -->
+            <div class="seat" id="seat1">1</div>
+            <div class="seat" id="seat2">2</div>
+            <div class="seat" id="seat3">3</div>
+            <div class="seat" id="seat4">4</div>
+            <div class="seat" id="seat5">5</div>
+            <div class="seat" id="seat6">6</div>
+            <div class="seat" id="seat7">7</div>
+            <div class="seat" id="seat8">8</div>
+            <div class="seat" id="seat9">9</div>
+            <div class="seat" id="seat10">10</div>
+        </div>
+    </div>
+
+</body>
+</html>

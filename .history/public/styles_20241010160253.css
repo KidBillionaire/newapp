@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#userTable {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+#userTable th,
+#userTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#userTable th {
+    background-color: #333;
+    color: white;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #555; /* Darker background */
+    color: #fff;           /* White text */
+  }
+  
+
+.montserrat-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700; /* strong title font */
+}
+
+.montserrat-body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400; /* normal body font */
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  :root {
+    --primary-color: #333;
+    --secondary-color: #007BFF;
+    --background: #faf7fc;
+  }
+  
+  body {
+    background: var(--background);
+    color: var(--primary-color);
+  }
+  
+  button {
+    background-color: var(--secondary-color);
+    color: white;
+  }
+    

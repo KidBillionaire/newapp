@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Poker Hands</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+  <script defer src="/js/app.js"></script> <!-- Link to frontend JS -->
+</head>
+<body>
+  <h1>User Poker Hands</h1>
+  
+  <!-- Add a new button to show profile settings -->
+  <button id="profileSettingsButton">Show Profile Settings</button>
+
+  <!-- Table to display user data -->
+  <table id="userTable" border="1">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Poker Hands</th>
+        <th>Total Wins</th>
+        <th>Total Losses</th>
+      </tr>
+    </thead>
+    <tbody></tbody> <!-- This will be filled dynamically -->
+  </table>
+
+  <!-- Profile Settings Section (Initially Hidden) -->
+  <div id="profileSettings" class="hidden">
+    <h2>Profile Settings</h2>
+    <form id="profileForm">
+      <label for="newUsername">New Username:</label>
+      <input type="text" id="newUsername" placeholder="Enter new username">
+      <br><br>
+
+      <label for="profilePicture">Profile Picture URL:</label>
+      <input type="text" id="profilePicture" placeholder="Enter picture URL">
+      <br><br>
+
+      <label for="totalWins">Total Wins:</label>
+      <input type="number" id="totalWins" placeholder="Total Wins">
+      <br><br>
+
+      <label for="totalLosses">Total Losses:</label>
+      <input type="number" id="totalLosses" placeholder="Total Losses">
+      <br><br>
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</body>
+</html>

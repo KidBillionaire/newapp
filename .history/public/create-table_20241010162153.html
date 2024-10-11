@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create a Poker Table</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link to your styles -->
+  <script defer src="/js/createTable.js"></script> <!-- Link to frontend JS for this page -->
+</head>
+<body class="create-table-page"> <!-- Add the class here to apply the background -->
+  <div>
+    <h1>Create a Poker Table</h1>
+    <!-- Form to Create a New Poker Table -->
+    <form id="createTableForm">
+      <label for="tableName">Table Name:</label>
+      <input type="text" id="tableName" placeholder="Enter table name" required>
+      <br><br>
+
+      <label for="numSeats">Number of Seats:</label>
+      <select id="numSeats">
+        <option value="2">2 Seats</option>
+        <option value="6">6 Seats</option>
+        <option value="10">10 Seats</option>
+      </select>
+      <br><br>
+
+      <label for="tableType">Table Type:</label>
+      <select id="tableType">
+        <option value="cash">Cash Game</option>
+        <option value="tournament">Tournament</option>
+      </select>
+      <br><br>
+
+      <button type="submit">Create Table</button>
+    </form>
+  </div>
+
+  
+</body>
+</html>
+
+
+<body class="create-table-page">
+  <div>
+    <h1>Create a Poker Table</h1>
+    <!-- Form to Create a New Poker Table -->
+    <form id="createTableForm">
+      <label for="tableName">Table Name:</label>
+      <input type="text" id="tableName" placeholder="Enter table name" required>
+      <br><br>
+
+      <label for="numSeats">Number of Seats:</label>
+      <select id="numSeats">
+        <option value="2">2 Seats</option>
+        <option value="6">6 Seats</option>
+        <option value="10">10 Seats</option>
+      </select>
+      <br><br>
+
+      <label for="tableType">Table Type:</label>
+      <select id="tableType">
+        <option value="cash">Cash Game</option>
+        <option value="tournament">Tournament</option>
+      </select>
+      <br><br>
+
+      <button type="submit">Create Table</button>
+    </form>
+
+    <!-- AI Players Section -->
+    <div id="aiPlayersSection" style="margin-top: 20px;">
+      <h2>AI Players</h2>
+      <ul id="aiPlayersList"></ul> <!-- Dynamic AI Player List -->
+    </div>
+  </div>
+</body>

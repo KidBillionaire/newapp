@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleek Poker Dashboard</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom CSS -->
+  <style>
+    /* Base Colors */
+    :root {
+      --bg-dark: #181818;
+      --bg-light: #222222;
+      --card-bg: #2e2e2e;
+      --primary-color: #e50914; /* Red */
+      --accent-color: #4caf50; /* Green */
+      --text-light: #ffffff;
+      --border-color: #444444;
+      --hover-bg: #3c3c3c;
+    }
+
+    /* Body Styling */
+    body, html {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 50px;
+      background: var(--bg-light);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .navbar a {
+      color: var(--text-light);
+      text-transform: uppercase;
+      text-decoration: none;
+      margin: 0 15px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: var(--primary-color);
+    }
+
+    /* Dashboard Container */
+    .dashboard-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 40px 50px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      flex: 1;
+      max-width: 300px;
+      background: var(--bg-light);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 15px 10px;
+      margin: 10px 0;
+      background: var(--card-bg);
+      text-align: center;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background: var(--hover-bg);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 3;
+      background: var(--bg-light);
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .main-content h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    /* Interactive Cards */
+    .stats-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s ease;
+    }
+
+    .stats-card:hover {
+      transform: scale(1.05);
+    }
+
+    .stats-card h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+    }
+
+    .stats-card p {
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: var(--bg-light);
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      width: 40%;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .close-modal {
+      color: var(--primary-color);
+      float: right;
+      font-size: 2em;
+      cursor: pointer;
+    }
+
+    .modal input, .modal button {
+      display: block;
+      width: 80%;
+      margin: 15px auto;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: var(--card-bg);
+      color: var(--text-light);
+    }
+
+    .modal button {
+      background: var(--primary-color);
+      transition: background 0.3s ease;
+    }
+
+    .modal button:hover {
+      background: #c40811;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="#">Bluff Royale</a>
+    <a href="#">Dashboard</a>
+    <a href="#">Games</a>
+    <a href="#">Profile</a>
+    <a href="#" id="settingsButton">Settings</a>
+  </div>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Menu</h2>
+      <a href="#">User Profile</a>
+      <a href="#">Game History</a>
+      <a href="#">Leaderboards</a>
+      <a href="#">Friends</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>Welcome to Your Poker Dashboard</h1>
+
+      <!-- Stats Cards -->
+      <div class="stats-card">
+        <h3>Total Wins</h3>
+        <p>36</p>
+      </div>
+
+      <div class="stats-card">
+        <h3>Total Games Played</h3>
+        <p>120</p>
+      </div>
+    </div>
+  </div>
+<!-- Include Lato Font -->
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Modal Structure -->
+<div class="modal" id="profileModal">
+  <div class="modal-content settings-modal">
+    <span class="close-modal" id="closeModal">&times;</span>
+    <h2 class="modal-title">Update Poker Profile Settings</h2>
+
+    <!-- Profile Section -->
+    <div class="settings-section">
+      <h3>Profile Information</h3>
+      <input type="text" id="username" placeholder="New Username" class="settings-input">
+      <input type="text" id="profilePicture" placeholder="Profile Picture URL" class="settings-input">
+      <input type="password" id="password" placeholder="New Password" class="settings-input">
+    </div>
+
+    <!-- Preferences Section -->
+    <div class="settings-section">
+      <h3>Preferences</h3>
+      <label for="themeSelect">Choose Theme:</label>
+      <select id="themeSelect" class="settings-select">
+        <option value="default">Default</option>
+        <option value="dark">Dark</option>
+        <option value="high-contrast">High Contrast</option>
+      </select>
+    </div>
+
+    <!-- Account Management Section -->
+    <div class="settings-section">
+      <h3>Account Management</h3>
+      <button class="delete-account-button" id="deleteAccount">Close Account</button>
+    </div>
+
+    <!-- Save and Cancel Buttons -->
+    <div class="settings-buttons">
+      <button class="save-button">Save Changes</button>
+      <button class="cancel-button" id="closeModal">Cancel</button>
+    </div>
+  </div>
+</div>
+
+  <script>
+    // Open and Close Modal Logic
+    const modal = document.getElementById('profileModal');
+    const settingsButton = document.getElementById('settingsButton');
+    const closeModal = document.getElementById('closeModal');
+
+    settingsButton.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

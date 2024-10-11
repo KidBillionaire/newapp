@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sit Down at the Poker Table</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="tableNameHeading">Poker Table</h1>
+        <div id="pokerTableContainer">
+            <!-- Seats will be dynamically populated here -->
+            <div id="communityCardsContainer">
+                <div class="community-card" id="card1"></div>
+                <div class="community-card" id="card2"></div>
+                <div class="community-card" id="card3"></div>
+                <div class="community-card" id="card4"></div>
+                <div class="community-card" id="card5"></div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div id="actionsContainer">
+            <button id="dealButton">Deal</button>
+            <button id="betButton" disabled>Bet</button>
+            <button id="foldButton" disabled>Fold</button>
+            <button id="checkButton" disabled>Check</button>
+        </div>
+    </div>
+
+    <!-- Player Information and Betting Section -->
+    <div id="tableInfo">
+        <h3 id="currentPot">Pot: $0</h3>
+        <div id="playerActions">
+            <button id="startGameButton">Start Game</button>
+        </div>
+    </div>
+
+    <script>
+        // Grab references to HTML elements
+        const pokerTableContainer = document.getElementById('pokerTableContainer');
+        const betButton = document.getElementById('betButton');
+        const foldButton = document.getElementById('foldButton');
+        const checkButton = document.getElementById('checkButton');
+        const dealButton = document.getElementById('dealButton');
+        const tableNameHeading = document.getElementById('tableNameHeading');
+        const communityCards = document.querySelectorAll('.community-card');
+
+        // Retrieve table settings from local storage
+        const tableName = localStorage.getItem('pokerTableName');
+        const numSeats = parseInt(localStorage.getItem('numSeats')) || 6;
+        const tableType = localStorage.getItem('tableType') || 'cash';
+
+        // Update table header
+        tableNameHeading.textContent = `Table Name: ${tableName} (${tableType} - ${numSeats} Seats)`;
+
+        let playerSeated = false;
+        let playerHand = [];
+
+        // Function to populate seats around the table
+        function setupTable() {
+            const xRadius = 350;
+            const yRadius = 200;
+            const centerX = 400;
+            const centerY = 250;
+
+            for (let i = 0; i < numSeats; i++) {
+                const seat = document.createElement('div');
+                seat.className = 'seat';
+                seat.textContent = i + 1;
+                seat.setAttribute('data-seat', i);
+                seat.addEventListener('click', takeSeat); // Seat click event
+                pokerTableContainer.appendChild(seat);
+
+                const angle = (i / numSeats) * (2 * Math.PI);
+                const x = centerX + xRadius * Math.cos(angle) - (seat.offsetWidth / 2);
+                const y = centerY + yRadius * Math.sin(angle) - (seat.offsetHeight / 2);
+
+                seat.style.left = `${x}px`;
+                seat.style.top = `${y}px`;
+            }
+        }
+
+        // Player takes a seat
+        function takeSeat(event) {
+            const seat = event.target;
+            seat.textContent = 'You';
+            seat.style.backgroundColor = '#00cc44';
+            pokerTableContainer.childNodes.forEach(node => node.removeEventListener('click', takeSeat)); // Disable other seats
+
+            playerSeated = true;
+            dealButton.disabled = false; // Enable deal button
+        }
+
+        // Function to handle dealing cards
+        function dealCards() {
+            if (!playerSeated) {
+                alert('Please take a seat to start the game!');
+                return;
+            }
+
+            dealButton.disabled = true; // Disable Deal button after dealing
+
+            // Deal 2 cards to the player
+            playerHand = [
+                randomCard(),
+                randomCard()
+            ];
+            console.log(`Your hand: ${playerHand.join(', ')}`);
+
+            // Show flop cards (after a short delay for visual effect)
+            setTimeout(() => {
+                communityCards[0].textContent = randomCard();
+                communityCards[1].textContent = randomCard();
+                communityCards[2].textContent = randomCard();
+                communityCards[0].classList.add('deal');
+                communityCards[1].classList.add('deal');
+                communityCards[2].classList.add('deal');
+
+                // Pause for player actions
+                enablePlayerActions();
+            }, 1000);
+        }
+
+        // Enable player action buttons
+        function enablePlayerActions() {
+            betButton.disabled = false;
+            foldButton.disabled = false;
+            checkButton.disabled = false;
+
+            console.log('Player actions enabled. Choose your move!');
+        }
+
+        // Simple random card generator
+        function randomCard() {
+            const suits = ['♥', '♦', '♣', '♠'];
+            const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+            const suit = suits[Math.floor(Math.random() * suits.length)];
+            const value = values[Math.floor(Math.random() * values.length)];
+            return `${value}${suit}`;
+        }
+
+        // Attach event listeners
+        dealButton.addEventListener('click', dealCards);
+        betButton.addEventListener('click', () => console.log('You bet!'));
+        foldButton.addEventListener('click', () => console.log('You folded!'));
+        checkButton.addEventListener('click', () => console.log('You checked!'));
+
+        setupTable(); // Initialize the table
+    </script>
+</body>
+</html>

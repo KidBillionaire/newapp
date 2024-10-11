@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Poker Table</title>
+    <style>
+        /* Main Page Styles */
+        body.create-table-page {
+            font-family: 'Arial', sans-serif;
+            background-color: #222;
+            color: #f0f0f0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #f7d358;
+        }
+
+        form {
+            margin: 20px auto;
+            width: 300px;
+        }
+
+        label, select, input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        #dealCardsButton {
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            text-align: center;
+            border: none;
+            background: #333;
+            color: #f7d358;
+            border-radius: 8px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        #dealCardsButton:hover {
+            background: #f7d358;
+            color: #333;
+        }
+
+        #bettingControls {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 10px;
+        }
+
+        #bettingControls button {
+            padding: 10px 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #4caf50;
+            color: #fff;
+            transition: background 0.3s ease-in-out;
+        }
+
+        #bettingControls button:hover {
+            background: #388e3c;
+        }
+
+        #betAmount {
+            width: 80px;
+            text-align: center;
+        }
+
+        #pokerTableContainer {
+            margin: 30px auto;
+            width: 800px;
+            height: 500px;
+            background-image: url('/images/vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg');
+            background-size: cover;
+            border-radius: 50% / 25%;
+            position: relative;
+        }
+
+        .seat {
+            width: 50px;
+            height: 50px;
+            background-color: #ff6347;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .seat:hover {
+            background-color: #ffd700;
+        }
+
+        .seat.occupied {
+            background-color: #4caf50;
+            cursor: not-allowed;
+        }
+
+        /* Pot in the Center */
+        #potDisplay {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #333;
+            color: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 24px;
+        }
+
+        .card {
+            width: 60px;
+            height: 80px;
+            background: #fff;
+            border-radius: 8px;
+            border: 2px solid #333;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.4s ease-out;
+        }
+
+        .card.deal {
+            transform: translate(-50%, -50%) scale(1);
+        }
+    </style>
+</head>
+<body class="create-table-page">
+    <div>
+        <h1>Create a Poker Table</h1>
+        <form id="createTableForm">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" placeholder="Enter table name" required>
+            <br><br>
+
+            <label for="numSeats">Number of Seats:</label>
+            <select id="numSeats">
+                <option value="2">2 Seats</option>
+                <option value="6">6 Seats</option>
+                <option value="10">10 Seats</option>
+            </select>
+            <br><br>
+
+            <label for="tableType">Table Type:</label>
+            <select id="tableType">
+                <option value="cash">Cash Game</option>
+                <option value="tournament">Tournament</option>
+            </select>
+            <br><br>
+
+            <button type="submit">Create Table</button>
+        </form>
+    </div>
+
+    <div id="dealCardsButton" style="display: none;">Deal 5 Cards</div>
+
+    <!-- Poker Table Container -->
+    <div id="pokerTableContainer">
+        <!-- Pot Display in the Center -->
+        <div id="potDisplay">Pot: $0</div>
+    </div>
+
+    <div id="bettingControls" style="display: none;">
+        <input type="number" id="betAmount" placeholder="Bet Amount" value="10">
+        <button id="smallBlindButton">Small Blind</button>
+        <button id="bigBlindButton">Big Blind</button>
+        <button id="raiseButton">Raise</button>
+        <button id="callButton">Call</button>
+        <button id="checkButton">Check</button>
+        <button id="foldButton">Fold</button>
+    </div>
+    
+
+    <script>
+        const createTableForm = document.getElementById('createTableForm');
+        const pokerTableContainer = document.getElementById('pokerTableContainer');
+        const dealCardsButton = document.getElementById('dealCardsButton');
+        const bettingControls = document.getElementById('bettingControls');
+        const potDisplay = document.getElementById('potDisplay');
+        let potAmount = 0;
+
+        let currentPlayer = null;
+        const players = {};
+
+        // Handle table creation
+        createTableForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            pokerTableContainer.innerHTML = ''; // Clear existing seats
+
+            const numSeats = parseInt(document.getElementById('numSeats').value);
+            const xRadius = 350;
+            const yRadius = 200;
+            const centerX = pokerTableContainer.offsetWidth / 2;
+            const centerY = pokerTableContainer.offsetHeight / 2;
+
+            for (let i = 0; i < numSeats; i++) {
+                const seat = document.createElement('div');
+                seat.className = 'seat';
+                seat.textContent = `Seat ${i + 1}`;
+                seat.setAttribute('data-seat', i + 1);
+                seat.addEventListener('click', handleSeatClick);
+                pokerTableContainer.appendChild(seat);
+
+                const angle = (i / numSeats) * (2 * Math.PI);
+                const x = centerX + xRadius * Math.cos(angle) - (seat.offsetWidth / 2);
+                const y = centerY + yRadius * Math.sin(angle) - (seat.offsetHeight / 2);
+
+                seat.style.left = `${x}px`;
+                seat.style.top = `${y}px`;
+            }
+
+            dealCardsButton.style.display = 'block';
+        });
+
+        // Handle seat click
+        function handleSeatClick(event) {
+            const seat = event.target;
+            if (seat.classList.contains('occupied')) return;
+
+            const seatNumber = seat.getAttribute('data-seat');
+            const playerName = prompt('Enter player name:');
+            if (playerName) {
+                seat.textContent = playerName;
+                seat.classList.add('occupied');
+                players[seatNumber] = { name: playerName, chips: 1000, seat: seatNumber }; // Store player info
+                currentPlayer = seatNumber;
+                updateBettingControls(); // Show betting controls when a player is seated
+            }
+        }
+
+        // Update betting controls
+        function updateBettingControls() {
+            if (Object.keys(players).length > 0) {
+                bettingControls.style.display = 'flex';
+            }
+        }
+
+        // Function to handle betting actions
+        document.getElementById('raiseButton').addEventListener('click', () => handleBet('raise'));
+        document.getElementById('callButton').addEventListener('click', () => handleBet('call'));
+        document.getElementById('checkButton').addEventListener('click', () => handleBet('check'));
+        document.getElementById('foldButton').addEventListener('click', () => handleBet('fold'));
+
+        function handleBet(action) {
+            const betAmount = parseInt(document.getElementById('betAmount').value) || 0;
+            if (action === 'raise' || action === 'call') {
+                if (players[currentPlayer].chips >= betAmount) {
+                    players[currentPlayer].chips -= betAmount;
+                    potAmount += betAmount;
+                    potDisplay.textContent = `Pot: $${potAmount}`;
+                } else {
+                    alert("Insufficient chips!");
+                }
+            }
+        }
+		
+		
+
+document.getElementById('smallBlindButton').addEventListener('click', () => handleBlindBet('smallBlind'));
+document.getElementById('bigBlindButton').addEventListener('click', () => handleBlindBet('bigBlind'));
+
+function handleBlindBet(type) {
+    const betAmount = type === 'smallBlind' ? table.smallBlind : table.bigBlind;
+
+    if (players[currentPlayer].chips >= betAmount) {
+        players[currentPlayer].chips -= betAmount;
+        potAmount += betAmount;
+        potDisplay.textContent = `Pot: $${potAmount}`;
+        socket.emit('blindBet', { seatNumber: currentPlayer, amount: betAmount, type });
+    } else {
+        alert("Insufficient chips!");
+    }
+}
+let table = null; // Define table globally
+
+// After creating or joining a table, assign the table object or ID to this variable
+// Assuming you receive a table object from the server or create it locally:
+table = { id: '67089f700eacbab80f2ccff5', potAmount: 0, players: [] }; // Example table object
+
+		
+    </script>
+</body>
+</html>
+
+

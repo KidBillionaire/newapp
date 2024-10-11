@@ -1,0 +1,192 @@
+/* Root Variables */
+:root {
+    --primary-color: #333;
+    --secondary-color: #007BFF;
+    --background: #f7f9fc;
+}
+
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background: var(--background);
+    color: var(--primary-color);
+    padding: 20px;
+}
+
+/* Typography */
+h1 {
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.montserrat-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.montserrat-body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+/* Button Styles */
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: var(--secondary-color);
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Table Styles */
+#userTable {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+#userTable th,
+#userTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#userTable th {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Profile Settings Section */
+#profileSettings {
+    margin: 20px auto;
+    width: 50%;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#profileSettings label {
+    display: inline-block;
+    width: 150px;
+}
+
+#profileSettings input {
+    width: calc(100% - 160px);
+    padding: 8px;
+    margin: 8px 0;
+}
+
+#profileSettings button {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Create a specific class for the Create Poker Table page */
+.create-table-page {
+    background-image: url('images/vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Allows for overlay positioning */
+}
+
+.create-table-page::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: -1;
+}
+
+/* Poker Table Container */
+#pokerTableContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+/* Poker Table Styles */
+#pokerTable {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: url('images/vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg') center/cover;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Seat Styles */
+.seat {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: none; /* Initially hide all seats */
+}
+
+/* Seat Positions */
+.seat-top { top: 29px; left: 50%; transform: translateX(-50%); }
+.seat-right { top: 50%; right: 10px; transform: translateY(-50%); }
+.seat-bottom { bottom: 10px; left: 50%; transform: translateX(-50%); }
+.seat-left { top: 50%; left: 10px; transform: translateY(-50%); }
+
+.seat-top-right { top: 30px; right: 30px; }
+.seat-bottom-right { bottom: 30px; right: 30px; }
+.seat-bottom-left { bottom: 30px; left: 30px; }
+.seat-top-left { top: 30px; left: 30px; }
+
+.seat-top-center { top: 20px; left: 30%; }
+.seat-bottom-center { bottom: 20px; left: 30%; }
+
+/* styles.css */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.circle-container {
+    position: relative;
+    width: 300px;  /* Size of the outer circle */
+    height: 300px; /* Size of the outer circle */
+    border: 5px solid #000;
+    border-radius: 50%; /* Makes it a circle */
+}
+
+.avatar {
+    position: absolute;
+    width: 50px;  /* Size of each avatar */
+    height: 50px; /* Size of each avatar */
+    background-color: #3498db; /* Avatar color */
+    border-radius: 50%; /* Makes it a circle */
+}
+

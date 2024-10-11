@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bluff Royale - Profile</title>
+  <!-- Meta Tags -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom CSS -->
+  <style>
+    /* CSS Variables */
+    :root {
+      --primary-color: #f5f5f5; /* Light background */
+      --secondary-color: #ffffff; /* Card background */
+      --accent-color: #1a73e8; /* Primary accent color */
+      --text-color: #202124; /* Dark text */
+      --muted-text-color: #5f6368; /* Muted text */
+      --border-color: #dadce0;
+      --button-bg-color: #1a73e8;
+      --button-text-color: #ffffff;
+      --hover-bg-color: #1669c1;
+    }
+
+    /* General Styles */
+    body {
+      margin: 0;
+      background-color: var(--primary-color);
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-color);
+      font-size: 1em;
+      padding-top: 70px; /* For fixed navbar */
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--accent-color);
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--hover-bg-color);
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--secondary-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand img {
+      height: 30px;
+    }
+
+    .nav-link {
+      color: var(--text-color) !important;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-color) !important;
+    }
+
+    /* Profile Container */
+    .profile-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* Section Styles */
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: var(--text-color);
+      text-align: center;
+    }
+
+    /* Statistics Section */
+    .statistics .stat-item {
+      background-color: var(--secondary-color);
+      padding: 30px;
+      border-radius: 8px;
+      width: 250px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .statistics .stat-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .statistics .stat-item h3 {
+      color: var(--accent-color);
+      margin-bottom: 15px;
+    }
+
+    .statistics .stat-item p {
+      font-size: 2rem;
+      margin: 0;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+
+    /* Achievements Section */
+    .achievements .achievement-item {
+      background-color: var(--secondary-color);
+      padding: 20px;
+      border-radius: 8px;
+      width: 180px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .achievements .achievement-item img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    .achievements .achievement-item p {
+      margin: 0;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    /* Transaction History */
+    .transaction-history .table {
+      background-color: var(--secondary-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .transaction-history th,
+    .transaction-history td {
+      padding: 15px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .transaction-history th {
+      background-color: var(--button-bg-color);
+      color: #ffffff;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .transaction-history tbody tr {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .transaction-history tbody tr:hover {
+      background-color: #f1f3f4;
+    }
+
+    /* Settings Section */
+    .settings form .form-group {
+      margin-bottom: 20px;
+    }
+
+    .settings form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .settings form input,
+    .settings form select {
+      width: 100%;
+      padding: 12px;
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      color: var(--text-color);
+    }
+
+    .settings .save-button {
+      background-color: var(--button-bg-color);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 5px;
+      color: var(--button-text-color);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+
+    .settings .save-button:hover {
+      background-color: var(--hover-bg-color);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--secondary-color);
+      padding: 20px 0;
+      color: var(--muted-text-color);
+      border-top: 1px solid var(--border-color);
+    }
+
+    footer a {
+      color: var(--muted-text-color);
+      margin: 0 10px;
+    }
+
+    footer a:hover {
+      color: var(--accent-color);
+    }
+
+    /* Back-to-Top Button */
+    #backToTopBtn {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 99;
+      background-color: var(--button-bg-color);
+      color: var(--button-text-color);
+      border: none;
+      padding: 15px;
+      border-radius: 50%;
+      display: none;
+      cursor: pointer;
+    }
+
+    #backToTopBtn:hover {
+      background-color: var(--hover-bg-color);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 767px) {
+      .user-info {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .statistics .stats-grid,
+      .achievements .achievement-list {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .statistics .stat-item,
+      .achievements .achievement-item {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <!-- Replace with your logo -->
+        <img src="logo.png" alt="Bluff Royale">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+          </li>6708814c4e77da44103ce026
+          <li class="nav-item">
+            <a class="nav-link" href="lobby.html">Games</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="profile.html">Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile Container -->
+  <div class="profile-container">
+    <!-- User Info Section -->
+    <div class="user-info">
+      <div class="profile-picture">
+  <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile picture of Player1">
+  <div class="level-badge">15</div>
+  <!-- Upload Button -->
+  <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" hidden />
+  <label for="imageUpload" class="upload-button">
+    <i class="fas fa-camera"></i>
+  </label>
+</div>
+
+    <!-- Statistics Section -->
+    <div class="section statistics">
+      <h2>Statistics</h2>
+      <div class="stats-grid d-flex flex-wrap gap-4 justify-content-center">
+        <div class="stat-item">
+          <h3>Games Played</h3>
+          <p>320</p>
+        </div>
+        <div class="stat-item">
+          <h3>Win Rate</h3>
+          <p>62%</p>
+        </div>
+        <div class="stat-item">
+          <h3>Total Winnings</h3>
+          <p>$12,500</p>
+        </div>
+        <div class="stat-item">
+          <h3>Best Hand</h3>
+          <p>Royal Flush</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Section -->
+    <div class="section achievements">
+      <h2>Achievements</h2>
+      <div class="achievement-list d-flex flex-wrap gap-4 justify-content-center">
+        <div class="achievement-item">
+          <img src="https://via.placeholder.com/80" alt="High Roller Badge">
+          <p>High Roller</p>
+          <div class="progress mt-2">
+            <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+          </div>
+        </div>
+        <div class="achievement-item">
+          <img src="https://via.placeholder.com/80" alt="Winning Streak Badge">
+          <p>Winning Streak</p>
+          <div class="progress mt-2">
+            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+          </div>
+        </div>
+        <div class="achievement-item">
+          <img src="https://via.placeholder.com/80" alt="Early Bird Badge">
+          <p>Early Bird</p>
+          <div class="progress mt-2">
+            <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div>
+          </div>
+        </div>
+        <!-- Add more achievements as needed -->
+      </div>
+    </div>
+
+    <!-- Transaction History -->
+    <div class="section transaction-history">
+      <h2>Transaction History</h2>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Balance After</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2023-09-15</td>
+              <td>Deposit</td>
+              <td>$500</td>
+              <td>$1,250</td>
+            </tr>
+            <tr>
+              <td>2023-09-10</td>
+              <td>Withdrawal</td>
+              <td>$200</td>
+              <td>$750</td>
+            </tr>
+            <tr>
+              <td>2023-09-05</td>
+              <td>Game Winnings</td>
+              <td>$300</td>
+              <td>$950</td>
+            </tr>
+            <!-- Add more transactions as needed -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="section settings">
+      <h2>Account Settings</h2>
+      <form id="settingsForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" value="player1@example.com">
+            </div>
+            <div class="form-group">
+              <label for="password">Change Password</label>
+              <input type="password" id="password" placeholder="New Password">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="notifications">Notification Preferences</label>
+              <select id="notifications">
+                <option value="all">All Notifications</option>
+                <option value="email">Email Only</option>
+                <option value="sms">SMS Only</option>
+                <option value="none">No Notifications</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="save-button" onclick="saveSettings()">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <div class="container">
+      <p class="mb-1">&copy; 2023 Bluff Royale. All rights reserved.</p>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Us</a>
+      <div class="mt-2">
+        <a href="#"><i class="fab fa-facebook-f fa-lg"></i></a>
+        <a href="#"><i class="fab fa-twitter fa-lg"></i></a>
+        <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back-to-Top Button -->
+  <button onclick="topFunction()" id="backToTopBtn" title="Go to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JavaScript -->
+  <script>
+    // Back-to-Top Button
+    window.onscroll = function() {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      const backToTopBtn = document.getElementById("backToTopBtn");
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        backToTopBtn.style.display = "block";
+      } else {
+        backToTopBtn.style.display = "none";
+      }
+    }
+
+    function topFunction() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Function to save settings (placeholder functionality)
+    function saveSettings() {
+      // Get form values
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const notifications = document.getElementById('notifications').value;
+
+      // Perform validation and send data to server
+      // For now, we'll just display a confirmation
+      alert('Your settings have been saved.');
+
+      // TODO: Implement actual save logic
+    }
+  </script>
+
+  <!-- At the end of the body, before the closing </body> tag -->
+<script>
+  // Function to preview the uploaded image
+  document.getElementById('imageUpload').onchange = function(event) {
+    const [file] = event.target.files;
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file.');
+        return;
+      }
+      // Validate file size (e.g., max 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        alert('File size exceeds 2MB.');
+        return;
+      }
+      const imgElement = document.getElementById('profileImage');
+      imgElement.src = URL.createObjectURL(file);
+    }
+  };
+</script>
+
+</body>
+</html>

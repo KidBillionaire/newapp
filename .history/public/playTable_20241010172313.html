@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Poker Table</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="create-table-page">
+    <div id="pokerTableContainer">
+        <h2 id="tableNameDisplay"></h2>
+        <div id="pokerTable">
+            <!-- Seats will be dynamically populated here -->
+        </div>
+    </div>
+
+    <!-- Action buttons for gameplay -->
+    <div id="actionsContainer">
+        <button id="takeSeatButton">Take a Seat</button>
+        <button id="foldButton" disabled>Fold</button>
+        <button id="callButton" disabled>Call</button>
+        <button id="betButton" disabled>Bet</button>
+    </div>
+
+    <script>
+        // Read stored table settings
+        const tableName = localStorage.getItem('pokerTableName');
+        const numSeats = parseInt(localStorage.getItem('numSeats'), 10) || 6; // Default to 6 seats if not set
+
+        // Elements for table and seats
+        const tableNameDisplay = document.getElementById('tableNameDisplay');
+        const pokerTable = document.getElementById('pokerTable');
+
+        // Display the table name
+        tableNameDisplay.textContent = `Table: ${tableName}`;
+
+        // Create seats dynamically based on the number of seats specified
+        for (let i = 1; i <= numSeats; i++) {
+            const seatDiv = document.createElement('div');
+            seatDiv.className = 'seat';
+            seatDiv.id = `seat${i}`;
+            seatDiv.textContent = `Seat ${i}`;
+            seatDiv.style.position = 'absolute';
+
+            // Calculate seat positions around the table
+            const angle = (i / numSeats) * (2 * Math.PI);
+            const radius = 200; // Adjust the radius to control seat placement
+            const x = radius * Math.cos(angle);
+            const y = radius * Math.sin(angle);
+
+            seatDiv.style.left = `${50 + x}%`; // Place seats relative to center
+            seatDiv.style.top = `${50 + y}%`;  // Offset to place around the table
+
+            pokerTable.appendChild(seatDiv);
+        }
+
+        // Handle button actions (simplified for now)
+        const takeSeatButton = document.getElementById('takeSeatButton');
+        takeSeatButton.addEventListener('click', () => {
+            alert('Seat Taken! Ready to play.');
+        });
+    </script>
+</body>
+</html>

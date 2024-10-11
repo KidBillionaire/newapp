@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sit Down at the Poker Table</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="tableNameHeading">Poker Table</h1>
+        <div id="pokerTableContainer">
+            <!-- Seats will be dynamically populated here -->
+        </div>
+        <div id="actionsContainer">
+            <button id="betButton" disabled>Bet</button>
+            <button id="foldButton" disabled>Fold</button>
+            <button id="checkButton" disabled>Check</button>
+        </div>
+    </div>
+
+    <script>
+        const pokerTableContainer = document.getElementById('pokerTableContainer');
+        const betButton = document.getElementById('betButton');
+        const foldButton = document.getElementById('foldButton');
+        const checkButton = document.getElementById('checkButton');
+        const tableNameHeading = document.getElementById('tableNameHeading');
+
+        // Retrieve the table settings from local storage
+        const tableName = localStorage.getItem('pokerTableName');
+        const numSeats = parseInt(localStorage.getItem('numSeats'));
+        const tableType = localStorage.getItem('tableType');
+
+        tableNameHeading.textContent = `Table Name: ${tableName} (${tableType} - ${numSeats} Seats)`;
+
+        // Populate seats around the table
+        const xRadius = 350;
+        const yRadius = 200;
+        const centerX = 400;
+        const centerY = 250;
+
+        for (let i = 0; i < numSeats; i++) {
+            const seat = document.createElement('div');
+            seat.className = 'seat';
+            seat.textContent = i + 1;
+            seat.setAttribute('data-seat', i);
+            seat.addEventListener('click', takeSeat); // Add event listener for seating
+            pokerTableContainer.appendChild(seat);
+
+            const angle = (i / numSeats) * (2 * Math.PI);
+            const x = centerX + xRadius * Math.cos(angle) - (seat.offsetWidth / 2);
+            const y = centerY + yRadius * Math.sin(angle) - (seat.offsetHeight / 2);
+
+            seat.style.left = `${x}px`;
+            seat.style.top = `${y}px`;
+        }
+
+        // Handle taking a seat
+        function takeSeat(event) {
+            const seat = event.target;
+            const seatNumber = seat.getAttribute('data-seat');
+
+            // Highlight the seat and disable other seats
+            seat.style.backgroundColor = '#00cc44'; // Mark user seat as green
+            seat.textContent = 'You'; // Change to "You"
+            pokerTableContainer.childNodes.forEach(node => node.removeEventListener('click', takeSeat));
+
+            // Enable action buttons
+            betButton.disabled = false;
+            foldButton.disabled = false;
+            checkButton.disabled = false;
+
+            console.log(`You took seat ${seatNumber}. Ready to play!`);
+        }
+
+        // Set up button actions
+        betButton.addEventListener('click', () => console.log('You bet!'));
+        foldButton.addEventListener('click', () => console.log('You folded!'));
+        checkButton.addEventListener('click', () => console.log('You checked!'));
+    </script>
+</body>
+</html>

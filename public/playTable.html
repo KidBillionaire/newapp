@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Poker Table</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #f0f0f0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            text-align: center;
+        }
+        .seat {
+            width: 50px;
+            height: 50px;
+            background-color: #ff6347;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 10px;
+            cursor: pointer;
+            position: absolute;
+        }
+        .seat.occupied {
+            background-color: #4caf50;
+        }
+        #pokerTableContainer {
+            width: 800px;
+            height: 500px;
+            background-image: url('/images/vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg');
+            background-size: cover;
+            border-radius: 25px;
+            position: relative;
+            margin: auto;
+        }
+        #communityCardsContainer {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .community-card {
+            width: 60px;
+            height: 80px;
+            background: #fff;
+            border: 2px solid #333;
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="tableNameHeading">Poker Table</h1>
+        
+        <!-- Poker Table Container -->
+        <div id="pokerTableContainer">
+            <div id="communityCardsContainer">
+                <div class="community-card" id="card1"></div>
+                <div class="community-card" id="card2"></div>
+                <div class="community-card" id="card3"></div>
+                <div class="community-card" id="card4"></div>
+                <div class="community-card" id="card5"></div>
+            </div>
+        </div>
+
+        <!-- Player Hand and AI Hand Containers -->
+        <div id="playerHandContainer">
+            <h3>Your Hand:</h3>
+            <div id="playerHand" class="hand-container"></div>
+        </div>
+        <div id="aiHandContainer">
+            <h3>AI Hand:</h3>
+            <div id="aiHand" class="hand-container"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div id="actionsContainer">
+            <button id="dealButton">Deal</button>
+            <button id="betButton" disabled>Bet</button>
+            <button id="callButton" disabled>Call</button>
+            <button id="foldButton" disabled>Fold</button>
+            <button id="checkButton" disabled>Check</button>
+            <button id="bigBlindButton">Big Blind</button>
+        </div>
+
+        <!-- Player Information and Pot Display -->
+        <div id="playerInfo">
+            <h3 id="currentPot">Pot: $0</h3>
+            <p id="playerChips">Player Chips: $1000</p>
+            <p id="aiChips">AI Chips: $1000</p>
+        </div>
+
+        <!-- Seats Container -->
+        <div id="seatsContainer">
+            <div class="seat" data-seat="1">Seat 1</div>
+            <div class="seat" data-seat="2">Seat 2</div>
+            <div class="seat" data-seat="3">Seat 3</div>
+            <div class="seat" data-seat="4">Seat 4</div>
+            <div class="seat" data-seat="5">Seat 5</div>
+            <div class="seat" data-seat="6">Seat 6</div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Game Logic -->
+    <script>
+        // Grab references to HTML elements
+        const pokerTableContainer = document.getElementById('pokerTableContainer');
+        const dealButton = document.getElementById('dealButton');
+        const bigBlindButton = document.getElementById('bigBlindButton');
+        const currentPotDisplay = document.getElementById('currentPot');
+        const playerChipsDisplay = document.getElementById('playerChips');
+        const aiChipsDisplay = document.getElementById('aiChips');
+        const communityCards = document.querySelectorAll('.community-card');
+        const seats = document.querySelectorAll('.seat');
+// Game State Variables
+let playerChips = 1000;
+let aiChips = 1000;
+let pot = 0;
+let playerHand = [];
+let aiHand = [];
+let currentCardIndex = 0; // Start at 0 for community cards
+let gameActive = false; // To check if the game is active
+const maxCards = 5; // Total community cards
+const delayTime = 2000; // Delay for AI decision (2 seconds)
+
+// Function to update all chips and pot display
+function updateChipsDisplay() {
+    currentPotDisplay.textContent = `Pot: $${pot}`;
+    playerChipsDisplay.textContent = `Player Chips: $${playerChips}`;
+    aiChipsDisplay.textContent = `AI Chips: $${aiChips}`;
+}
+
+// Function to handle the Big Blind posting
+function postBigBlind() {
+    const betAmount = 10; // Set the big blind amount
+    if (playerChips < betAmount) {
+        alert('Not enough chips to post the big blind!');
+        return;
+    }
+    playerChips -= betAmount;
+    pot += betAmount;
+    updateChipsDisplay();
+
+    // Call function to deal community cards
+    dealCommunityCards();
+}
+
+// Function to deal community cards
+function dealCommunityCards() {
+    dealButton.disabled = true; // Disable Deal button after dealing
+    currentCardIndex = 0; // Reset card index for a new round
+
+    // Show the flop cards (first three community cards)
+    setTimeout(() => {
+        revealCommunityCards([0, 1, 2]); // Show first three cards
+        enablePlayerActions(); // Enable player actions after flop
+    }, 1000);
+}
+
+// Function to reveal specific community cards
+function revealCommunityCards(indices) {
+    indices.forEach(index => {
+        const cardElement = document.getElementById(`card${index + 1}`);
+        cardElement.textContent = randomCard(); // Deal the card
+        cardElement.classList.add('deal'); // Show animation
+    });
+}
+
+// Function to handle player actions
+function enablePlayerActions() {
+    betButton.disabled = false;
+    foldButton.disabled = false;
+    checkButton.disabled = false;
+
+    // Disable action buttons for AI decision
+    setTimeout(() => {
+        disablePlayerActions(); // Disable player actions after delay
+        aiTakeAction(); // Trigger AI action
+    }, delayTime);
+}
+
+// Disable player actions after the decision is made
+function disablePlayerActions() {
+    betButton.disabled = true;
+    foldButton.disabled = true;
+    checkButton.disabled = true;
+}
+
+// AI decision logic
+function aiTakeAction() {
+    // Simple AI logic to decide to check or raise
+    const aiDecision = Math.random() > 0.5 ? 'raise' : 'check'; // Random decision for demonstration
+    if (aiDecision === 'raise') {
+        const aiBetAmount = 20; // AI raises
+        if (aiChips >= aiBetAmount) {
+            aiChips -= aiBetAmount;
+            pot += aiBetAmount;
+            alert(`AI raises by $${aiBetAmount}.`);
+        }
+    } else {
+        alert(`AI checks.`);
+    }
+    updateChipsDisplay();
+    
+    // After AI's decision, check if the next community card can be dealt
+    currentCardIndex++;
+    if (currentCardIndex < maxCards) {
+        setTimeout(() => {
+            revealCommunityCards([currentCardIndex]); // Show next community card
+            enablePlayerActions(); // Enable player actions again
+        }, 1000);
+    } else {
+        showdown(); // All community cards dealt, go to showdown
+    }
+}
+
+// Function to handle showdown
+function showdown() {
+    alert(`Showdown! Your hand: ${playerHand.join(', ')}. AI hand: ${aiHand.join(', ')}. Total Pot: $${pot}`);
+}
+
+// Event Listeners
+bigBlindButton.addEventListener('click', postBigBlind);
+        // Function to set the current user ID
+        function setCurrentUser(userId) {
+            currentUserId = userId;
+        }
+
+        // Function to update all chips and pot display
+        function updateChipsDisplay() {
+            currentPotDisplay.textContent = `Pot: $${pot}`;
+            playerChipsDisplay.textContent = `Player Chips: $${playerChips}`;
+            aiChipsDisplay.textContent = `AI Chips: $${aiChips}`;
+        }
+
+        // Position the seats in an oval shape
+        function positionSeats() {
+            const numSeats = seats.length;
+            const xRadius = 300; // X-axis radius for the oval
+            const yRadius = 200; // Y-axis radius for the oval
+            const centerX = pokerTableContainer.offsetWidth / 2;
+            const centerY = pokerTableContainer.offsetHeight / 2;
+
+            for (let i = 0; i < numSeats; i++) {
+                const seat = seats[i];
+                const angle = (i / numSeats) * (2 * Math.PI);
+                const x = centerX + xRadius * Math.cos(angle) - (seat.offsetWidth / 2);
+                const y = centerY + yRadius * Math.sin(angle) - (seat.offsetHeight / 2);
+
+                seat.style.position = 'absolute';
+                seat.style.left = `${x}px`;
+                seat.style.top = `${y}px`;
+            }
+        }
+
+        // Initial position of the seats
+        positionSeats();
+
+        // Function to handle the Big Blind action
+        bigBlindButton.addEventListener('click', function() {
+            const bigBlindAmount = 10; // Example big blind amount
+            if (playerChips < bigBlindAmount) {
+                alert('Not enough chips for the big blind!');
+                return;
+            }
+            playerChips -= bigBlindAmount; // Subtract from player chips
+            pot += bigBlindAmount; // Add to pot
+            updateChipsDisplay(); // Update pot and chip display
+            
+            // Deal community cards after placing the big blind
+            dealCommunityCards();
+        });
+
+        // Function to deal community cards
+        function dealCommunityCards() {
+            // Show the flop cards (first three community cards)
+            setTimeout(() => {
+                revealCommunityCards([0, 1, 2]); // Show first three cards
+            }, 1000);
+            // Optionally reveal turn and river after more time
+            setTimeout(() => {
+                revealCommunityCards([3, 4]); // Show turn and river
+            }, 2000);
+        }
+
+        // Function to reveal specific community cards
+        function revealCommunityCards(indices) {
+            indices.forEach(index => {
+                const card = randomCard(); // Deal the card
+                communityCards[index].textContent = card; // Display the card
+                communityCards[index].classList.add('deal'); // Show animation
+            });
+        }
+
+        // Simple random card generator
+        function randomCard() {
+            const suits = ['♥', '♦', '♣', '♠'];
+            const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+            const suit = suits[Math.floor(Math.random() * suits.length)];
+            const value = values[Math.floor(Math.random() * values.length)];
+            return `${value}${suit}`;
+        }
+
+        // Handle seat click to add players
+        seats.forEach(seat => {
+            seat.addEventListener('click', handleSeatClick);
+        });
+
+        function handleSeatClick(event) {
+            const seat = event.target;
+            if (seat.classList.contains('occupied')) return;
+
+            const seatNumber = seat.getAttribute('data-seat');
+            const playerName = prompt('Enter player name:');
+            if (playerName && currentUserId) {
+                seat.textContent = playerName;
+                seat.classList.add('occupied');
+                players[seatNumber] = { name: playerName, chips: 1000, seat: seatNumber }; 
+                addPlayerToTable(currentUserId, seatNumber); // Add player to table via API
+                updateBettingControls(); // Show betting controls when a player is seated
+            } else if (!currentUserId) {
+                alert('User ID is not set. Please log in first.');
+            }
+        }
+
+        // Function to add player to the table via API call
+        function addPlayerToTable(userId, seatNumber) {
+            fetch(`http://localhost:3000/tables/${tableId}/addPlayer`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    seatNumber: seatNumber,
+                    chips: 1000,
+                }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to add player to the table');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Player added:', data);
+            })
+            .catch(error => {
+                console.error('Error adding player:', error);
+            });
+        }
+
+        // Example usage of setting the user ID when logging in
+        setCurrentUser('6708c42b5b4de1afc384c02e'); // Replace with actual user ID after login
+
+        
+    </script>
+</body>
+</html>

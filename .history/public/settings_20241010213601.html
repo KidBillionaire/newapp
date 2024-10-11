@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bluff Royale - Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: 'Roboto', sans-serif;
+      padding-top: 70px;
+    }
+
+    .profile-container {
+      max-width: 900px;
+      margin: 20px auto;
+    }
+
+    .section {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .profile-picture img {
+      border-radius: 50%;
+      border: 4px solid #fff;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .upload-button {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 1.5em;
+      background: #28a745;
+      color: #fff;
+      border-radius: 50%;
+      padding: 8px;
+    }
+
+    .upload-button:hover {
+      background: #218838;
+    }
+
+    .stat-item, .achievement-item {
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      width: 180px;
+      margin: 10px;
+      background-color: #f8f9fa;
+    }
+
+    .achievement-item img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    .transaction-history table {
+      width: 100%;
+    }
+
+    .save-button {
+      width: 100%;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 12px;
+      transition: background-color 0.3s ease;
+    }
+
+    .save-button:hover {
+      background-color: #218838;
+    }
+
+    footer {
+      background-color: #333;
+      padding: 20px 0;
+      color: #ddd;
+    }
+
+    footer a {
+      color: #bbb;
+      margin: 0 15px;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="logo.png" alt="Bluff Royale" style="height: 30px;">
+      </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" title="Toggle Navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="create-table.html">Games</a></li>
+          <li class="nav-item"><a class="nav-link active" href="profile.html">Profile</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile Container -->
+  <div class="profile-container">
+    <!-- User Info Section -->
+    <div class="section text-center user-info">
+      <div class="profile-picture position-relative d-inline-block">
+        <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture">
+        <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" hidden />
+        <label for="imageUpload" class="upload-button"><i class="fas fa-camera"></i></label>
+      </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="section statistics">
+      <h2>Statistics</h2>
+      <div class="d-flex justify-content-center">
+        <div class="stat-item">
+          <h3>Games Played</h3>
+          <p>320</p>
+        </div>
+        <div class="stat-item">
+          <h3>Win Rate</h3>
+          <p>62%</p>
+        </div>
+        <div class="stat-item">
+          <h3>Total Winnings</h3>
+          <p>$12,500</p>
+        </div>
+        <div class="stat-item">
+          <h3>Best Hand</h3>
+          <p>Royal Flush</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Section -->
+    <div class="section achievements">
+      <h2>Achievements</h2>
+      <div class="d-flex justify-content-center">
+        <div class="achievement-item">
+          <img src="https://via.placeholder.com/80" alt="High Roller Badge">
+          <p>High Roller</p>
+          <div class="progress mt-2">
+            <div class="progress-bar bg-success progress-bar-75">75%</div>
+          </div>
+        </div>
+        <div class="achievement-item">
+          <img src="https://via.placeholder.com/80" alt="Winning Streak Badge">
+          <p>Winning Streak</p>
+          <div class="progress mt-2">
+            <div class="progress-bar bg-warning" style="width: 50%;">50%</div>
+          </div>
+        </div>
+        <div class="achievement-item">
+          <img src="https://via.placeholder.com/80" alt="Early Bird Badge">
+          <p>Early Bird</p>
+          <div class="progress mt-2">
+            <div class="progress-bar bg-info" style="width: 90%;">90%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transaction History Section -->
+    <div class="section transaction-history">
+      <h2>Transaction History</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Balance After</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>2023-09-15</td><td>Deposit</td><td>$500</td><td>$1,250</td></tr>
+          <tr><td>2023-09-10</td><td>Withdrawal</td><td>$200</td><td>$750</td></tr>
+          <tr><td>2023-09-05</td><td>Game Winnings</td><td>$300</td><td>$950</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="section settings">
+      <h2>Account Settings</h2>
+      <form id="settingsForm">
+        <div class="form-group mb-3">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" class="form-control" value="player1@example.com" required>
+        </div>
+        <div class="form-group mb-3">
+          <label for="password">Change Password</label>
+          <input type="password" id="password" class="form-control" placeholder="New Password">
+        </div>
+        <div class="form-group mb-3">
+          <label for="notifications">Notification Preferences</label>
+          <select id="notifications" class="form-control">
+            <option value="all">All Notifications</option>
+            <option value="email">Email Only</option>
+            <option value="sms">SMS Only</option>
+            <option value="none">No Notifications</option>
+          </select>
+        </div>
+        <button type="button" class="save-button" onclick="saveSettings()">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <div class="container">
+      <p>&copy; 2023 Bluff Royale. All rights reserved.</p>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Us</a>
+    </div>
+  </footer>
+
+  <!-- Image Upload Script -->
+  <script>
+    document.getElementById('imageUpload').addEventListener('change', function(event) {
+      const [file] = event.target.files;
+      if (file && file.type.startsWith('image/') && file.size <= 2 * 1024 * 1024) {
+        document.getElementById('profileImage').src = URL.createObjectURL(file);
+      } else {
+        alert('Invalid file or size exceeds 2MB');
+      }
+    });
+  </script>
+</body>
+</html>

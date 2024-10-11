@@ -1,0 +1,125 @@
+// Handle table creation
+createTableForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    pokerTableContainer.innerHTML = ''; // Clear existing seats
+
+    const tableName = document.getElementById('tableName').value;
+    const numSeats = parseInt(document.getElementById('numSeats').value);
+    const tableType = document.getElementById('tableType').value;
+
+    // Create table via API
+    const response = await fetch('http://localhost:3000/tables', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tableName, numSeats, tableType })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.message}`);
+        return;
+    }
+
+    const newTable = await response.json();
+    console.log('New table created:', newTable);
+    setupSeats(numSeats); // Set up the seats after table creation
+});
+
+// Function to set up seats
+function setupSeats(numSeats) {
+    const xRadius = 350;
+    const yRadius = 200;
+    const centerX = pokerTableContainer.offsetWidth / 2;
+    const centerY = pokerTableContainer.offsetHeight / 2;
+
+    for (let i = 0; i < numSeats; i++) {
+        const seat = document.createElement('div');
+        seat.className = 'seat';
+        seat.textContent = `Seat ${i + 1}`;
+        seat.setAttribute('data-seat', i + 1);
+        seat.addEventListener('click', handleSeatClick);
+        pokerTableContainer.appendChild(seat);
+
+        const angle = (i / numSeats) * (2 * Math.PI);
+        const x = centerX + xRadius * Math.cos(angle) - (seat.offsetWidth / 2);
+        const y = centerY + yRadius * Math.sin(angle) - (seat.offsetHeight / 2);
+
+        seat.style.left = `${x}px`;
+        seat.style.top = `${y}px`;
+    }
+
+    dealCardsButton.style.display = 'block';
+}
+
+// Handle seat click
+function handleSeatClick(event) {
+    const seat = event.target;
+    if (seat.classList.contains('occupied')) return;
+
+    const seatNumber = seat.getAttribute('data-seat');
+    const playerName = prompt('Enter player name:');
+    if (playerName) {
+        seat.textContent = playerName;
+        seat.classList.add('occupied');
+        players[seatNumber] = { name: playerName, chips: 1000, seat: seatNumber };
+        currentPlayer = seatNumber;
+        updateBettingControls();
+        
+        // Add player to the table via API
+        addPlayerToTable(seatNumber, playerName);
+    }
+}
+
+// Function to add player to the table
+async function addPlayerToTable(seatNumber, playerName) {
+    const response = await fetch(`http://localhost:3000/tables/YOUR_TABLE_ID/addPlayer`, { // Replace YOUR_TABLE_ID with the actual ID
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userId: 'USER_ID', // Get the user ID from your authentication logic
+            seatNumber: seatNumber,
+            chips: 1000
+        })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        alert(`Error adding player: ${errorData.message}`);
+    } else {
+        const updatedTable = await response.json();
+        console.log('Updated table with new player:', updatedTable);
+    }
+}
+
+// Example betting action functions linked to the API
+document.getElementById('raiseButton').addEventListener('click', () => handleBet('raise'));
+document.getElementById('callButton').addEventListener('click', () => handleBet('call'));
+
+// Function to handle betting actions
+async function handleBet(action) {
+    const betAmount = parseInt(document.getElementById('betAmount').value) || 0;
+
+    // Logic for updating chips and pot display...
+    
+    // After updating the game state, send the action to the server
+    const response = await fetch(`http://localhost:3000/tables/YOUR_TABLE_ID/logAction`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            actionType: action,
+            playerId: 'USER_ID', // Get the user ID from your authentication logic
+            amount: betAmount
+        })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        alert(`Error logging action: ${errorData.message}`);
+    }
+}

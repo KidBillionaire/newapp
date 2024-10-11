@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bluff Royale - Sexy Dashboard</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom CSS -->
+  <style>
+    /* Color Scheme */
+    :root {
+      --bg-dark: #1a1a1a;
+      --bg-light: #2a2a2a;
+      --primary-color: #e50914; /* Vibrant Red */
+      --secondary-color: #4caf50; /* Green Accent */
+      --text-color: #ffffff;
+      --card-bg: #333333;
+      --hover-bg: #444444;
+      --border-color: #3c3c3c;
+      --button-bg: var(--primary-color);
+      --button-hover: #d40811;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      color: var(--text-color);
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 50px;
+      background: var(--bg-light);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .navbar a {
+      color: var(--text-color);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      color: var(--primary-color);
+    }
+
+    /* Dashboard Container */
+    .dashboard-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 40px 50px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      flex: 1;
+      max-width: 300px;
+      background: var(--bg-light);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .sidebar h2 {
+      font-family: 'Montserrat', sans-serif;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 15px 10px;
+      margin: 10px 0;
+      background: var(--card-bg);
+      text-align: center;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background: var(--hover-bg);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 3;
+      background: var(--bg-light);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .main-content h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    /* Statistics Cards */
+    .stats-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s ease;
+    }
+
+    .stats-card:hover {
+      transform: scale(1.05);
+    }
+
+    .stats-card h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+    }
+
+    .stats-card p {
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    /* Tables and Data */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid var(--border-color);
+      padding: 15px;
+      text-align: center;
+    }
+
+    .data-table th {
+      background: var(--card-bg);
+      font-size: 1.1em;
+    }
+
+    .data-table tr:hover {
+      background: var(--hover-bg);
+    }
+
+    /* Modal */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: var(--bg-light);
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .close-modal {
+      color: var(--primary-color);
+      float: right;
+      font-size: 2em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="#">Bluff Royale</a>
+    <a href="#">Dashboard</a>
+    <a href="#">Games</a>
+    <a href="#">Profile</a>
+    <a href="#">Settings</a>
+  </div>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Menu</h2>
+      <a href="#">User Profile</a>
+      <a href="#">Game History</a>
+      <a href="#">Leaderboards</a>
+      <a href="#">Friends</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>Welcome to Your Poker Dashboard</h1>
+      
+      <div class="stats-card">
+        <h3>Total Wins</h3>
+        <p>36</p>
+      </div>
+
+      <div class="stats-card">
+        <h3>Total Games Played</h3>
+        <p>120</p>
+      </div>
+
+      <!-- Placeholder Table -->
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Game ID</th>
+            <th>Date</th>
+            <th>Result</th>
+            <th>Winnings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1001</td>
+            <td>2023-09-15</td>
+            <td>Win</td>
+            <td>$500</td>
+          </tr>
+          <tr>
+            <td>1002</td>
+            <td>2023-09-18</td>
+            <td>Lose</td>
+            <td>$0</td>
+          </tr>
+          <tr>
+            <td>1003</td>
+            <td>2023-09-22</td>
+            <td>Win</td>
+            <td>$300</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

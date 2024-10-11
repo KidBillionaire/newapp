@@ -1,0 +1,232 @@
+LEarningToCode
+├─ .history
+│  ├─ PythonScripts
+│  │  ├─ hello_20241010164609.py
+│  │  ├─ hello_20241010164825.py
+│  │  ├─ test_20241010164606
+│  │  └─ test_20241010164610
+│  ├─ app_20241010145744.js
+│  ├─ app_20241010150329.js
+│  ├─ app_20241010153929.js
+│  ├─ app_20241010154018.js
+│  ├─ app_20241010154020.js
+│  ├─ app_20241010154045.js
+│  ├─ app_20241010154756.js
+│  ├─ app_20241010154831.js
+│  ├─ app_20241010154949.js
+│  ├─ app_20241010154951.js
+│  ├─ app_20241010161407.js
+│  ├─ app_20241010161428.js
+│  ├─ controllers
+│  │  ├─ userController_20241010145908.js 
+│  │  ├─ userController_20241010150305.js 
+│  │  ├─ userController_20241010151651.js
+│  │  ├─ userController_20241010151702.js
+│  │  └─ userController_20241010151703.js
+│  ├─ models
+│  │  ├─ tableModel_20241010161315.js
+│  │  ├─ tableModel_20241010161323.js
+│  │  ├─ tableModel_20241010161910.js
+│  │  ├─ userModel_20241010145920.js     
+│  │  ├─ userModel_20241010150253.js     
+│  │  ├─ userModel_20241010151756.js
+│  │  └─ userModel_20241010151759.js
+│  ├─ public
+│  │  ├─ app_20241010150103.js
+│  │  ├─ app_20241010150453.js
+│  │  ├─ app_20241010151517.js
+│  │  ├─ create-table_20241010161131.html
+│  │  ├─ create-table_20241010161141.html
+│  │  ├─ create-table_20241010161637.html
+│  │  ├─ create-table_20241010161730.html
+│  │  ├─ create-table_20241010161735.html
+│  │  ├─ create-table_20241010162124.html
+│  │  ├─ create-table_20241010162146.html
+│  │  ├─ create-table_20241010162153.html
+│  │  ├─ create-table_20241010162158.html
+│  │  ├─ create-table_20241010162159.html
+│  │  ├─ create-table_20241010162200.html
+│  │  ├─ create-table_20241010162314.html
+│  │  ├─ create-table_20241010162315.html
+│  │  ├─ create-table_20241010162316.html
+│  │  ├─ create-table_20241010162319.html
+│  │  ├─ create-table_20241010162510.html
+│  │  ├─ create-table_20241010162723.html
+│  │  ├─ create-table_20241010162736.html
+│  │  ├─ create-table_20241010162741.html
+│  │  ├─ create-table_20241010162810.html
+│  │  ├─ create-table_20241010162837.html
+│  │  ├─ create-table_20241010163201.html
+│  │  ├─ create-table_20241010163229.html
+│  │  ├─ create-table_20241010163316.html
+│  │  ├─ create-table_20241010163350.html
+│  │  ├─ create-table_20241010163501.html
+│  │  ├─ create-table_20241010163507.html
+│  │  ├─ create-table_20241010164029.html
+│  │  ├─ create-table_20241010164147.html
+│  │  ├─ create-table_20241010164148.html
+│  │  ├─ create-table_20241010164349.html
+│  │  ├─ create-table_20241010170519.html
+│  │  ├─ create-table_20241010170520.html
+│  │  ├─ create-table_20241010170638.html
+│  │  ├─ create-table_20241010170809.html
+│  │  ├─ create-table_20241010171000.html
+│  │  ├─ create-table_20241010171328.html
+│  │  ├─ index_20241010150345.html
+│  │  ├─ index_20241010150348.html
+│  │  ├─ index_20241010154435.html
+│  │  ├─ index_20241010154449.html
+│  │  ├─ index_20241010155125.html
+│  │  ├─ index_20241010155126.html
+│  │  ├─ index_20241010155202.html
+│  │  ├─ index_20241010155500.html
+│  │  ├─ index_20241010155618.html
+│  │  ├─ index_20241010155906.html
+│  │  ├─ index_20241010155930.html
+│  │  ├─ index_20241010160424.html
+│  │  ├─ index_20241010161502.html
+│  │  ├─ js
+│  │  │  ├─ app_20241010151516.js
+│  │  │  ├─ app_20241010153550.js
+│  │  │  ├─ app_20241010154609.js
+│  │  │  ├─ app_20241010160541.js
+│  │  │  ├─ app_20241010172750.js
+│  │  │  ├─ cardUtils_20241010175128.js
+│  │  │  ├─ cardUtils_20241010175131.js
+│  │  │  ├─ createTable_20241010161202.js
+│  │  │  ├─ createTable_20241010161205.js
+│  │  │  ├─ createTable_20241010162044.js
+│  │  │  ├─ createTable_20241010162405.js
+│  │  │  ├─ createTable_20241010162550.js
+│  │  │  ├─ createTable_20241010162830.js
+│  │  │  ├─ createTable_20241010162831.js
+│  │  │  ├─ createTable_20241010162832.js
+│  │  │  ├─ createTable_20241010162833.js
+│  │  │  ├─ createTable_20241010163545.js
+│  │  │  ├─ createTable_20241010163546.js
+│  │  │  ├─ createTable_20241010163646.js
+│  │  │  ├─ createTable_20241010163924.js
+│  │  │  ├─ createTable_20241010163938.js
+│  │  │  ├─ createTable_20241010171151.js
+│  │  │  ├─ main_20241010175237.js
+│  │  │  ├─ main_20241010175240.js
+│  │  │  ├─ playerActions_20241010175038.js
+│  │  │  ├─ playerActions_20241010175046.js
+│  │  │  ├─ tableLogic_20241010175055.js
+│  │  │  └─ tableLogic_20241010175115.js
+│  │  ├─ playTable_20241010171402.html
+│  │  ├─ playTable_20241010171405.html
+│  │  ├─ playTable_20241010171633.html
+│  │  ├─ playTable_20241010172313.html
+│  │  ├─ playTable_20241010172323.html
+│  │  ├─ playTable_20241010172909.html
+│  │  ├─ playTable_20241010173125.html
+│  │  ├─ playTable_20241010173126.html
+│  │  ├─ playTable_20241010173448.html
+│  │  ├─ playTable_20241010173512.html
+│  │  ├─ playTable_20241010173539.html
+│  │  ├─ playTable_20241010173541.html
+│  │  ├─ playTable_20241010173726.html
+│  │  ├─ playTable_20241010173732.html
+│  │  ├─ playTable_20241010173735.html
+│  │  ├─ playTable_20241010173759.html
+│  │  ├─ playTable_20241010174044.html
+│  │  ├─ playTable_20241010174104.html
+│  │  ├─ playTable_20241010174238.html
+│  │  ├─ playTable_20241010174326.html
+│  │  ├─ playTable_20241010174328.html
+│  │  ├─ playTable_20241010174619.html
+│  │  ├─ playTable_20241010174652.html
+│  │  ├─ styles_20241010155432.css
+│  │  ├─ styles_20241010155446.css
+│  │  ├─ styles_20241010155631.css
+│  │  ├─ styles_20241010155658.css
+│  │  ├─ styles_20241010155755.css
+│  │  ├─ styles_20241010155806.css
+│  │  ├─ styles_20241010155813.css
+│  │  ├─ styles_20241010155940.css
+│  │  ├─ styles_20241010155942.css
+│  │  ├─ styles_20241010155957.css
+│  │  ├─ styles_20241010155958.css
+│  │  ├─ styles_20241010160009.css
+│  │  ├─ styles_20241010160025.css
+│  │  ├─ styles_20241010160026.css
+│  │  ├─ styles_20241010160129.css
+│  │  ├─ styles_20241010160155.css
+│  │  ├─ styles_20241010160219.css
+│  │  ├─ styles_20241010160220.css
+│  │  ├─ styles_20241010160241.css
+│  │  ├─ styles_20241010160253.css
+│  │  ├─ styles_20241010160304.css
+│  │  ├─ styles_20241010160314.css
+│  │  ├─ styles_20241010160449.css
+│  │  ├─ styles_20241010160451.css
+│  │  ├─ styles_20241010161029.css
+│  │  ├─ styles_20241010161107.css
+│  │  ├─ styles_20241010161112.css
+│  │  ├─ styles_20241010161657.css
+│  │  ├─ styles_20241010161809.css
+│  │  ├─ styles_20241010161827.css
+│  │  ├─ styles_20241010162524.css
+│  │  ├─ styles_20241010162930.css
+│  │  ├─ styles_20241010163002.css
+│  │  ├─ styles_20241010163037.css
+│  │  ├─ styles_20241010163038.css
+│  │  ├─ styles_20241010163523.css
+│  │  ├─ styles_20241010171131.css
+│  │  ├─ styles_20241010171132.css
+│  │  ├─ styles_20241010171445.css
+│  │  ├─ styles_20241010171823.css
+│  │  ├─ styles_20241010172013.css
+│  │  ├─ styles_20241010174544.css
+│  │  └─ styles_20241010174610.css
+│  ├─ pygame_script_20241010165101.py
+│  ├─ pygame_script_20241010165125.py
+│  ├─ pygame_script_20241010165334.py
+│  ├─ pygame_script_20241010165415.py
+│  ├─ pygame_script_20241010165424.py
+│  ├─ pygame_script_20241010165453.py
+│  ├─ pygame_script_20241010165456.py
+│  ├─ pygame_script_20241010165457.py
+│  ├─ pygame_script_20241010165511.py
+│  ├─ pygame_script_20241010165733.py
+│  ├─ pygame_script_20241010165907.py
+│  ├─ pygame_script_20241010170136.py
+│  ├─ routes
+│  │  ├─ tableRoutes_20241010161225.js
+│  │  ├─ tableRoutes_20241010161236.js
+│  │  ├─ tableRoutes_20241010161945.js
+│  │  ├─ userRoutes_20241010145834.js
+│  │  └─ userRoutes_20241010150313.js
+│  ├─ seed_20241010151936.js
+│  ├─ seed_20241010151950.js
+│  └─ seed_20241010152600.js
+├─ .vscode
+├─ app.js
+├─ config
+│  └─ config.js        
+├─ controllers
+│  └─ userController.js
+├─ models
+│  ├─ tableModel.js
+│  └─ userModel.js
+├─ public
+│  ├─ create-table.html
+│  ├─ images
+│  │  └─ vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg
+│  ├─ index.html
+│  ├─ js
+│  │  ├─ app.js
+│  │  ├─ cardUtils.js
+│  │  ├─ createTable.js
+│  │  ├─ main.js
+│  │  ├─ playerActions.js
+│  │  └─ tableLogic.js
+│  ├─ playTable.html
+│  └─ styles.css
+├─ pygame_script.py
+├─ routes
+│  ├─ tableRoutes.js
+│  └─ userRoutes.js
+├─ seed.js
+└─ workspace.code-workspace

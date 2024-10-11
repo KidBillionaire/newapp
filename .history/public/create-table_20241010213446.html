@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Poker Table</title>
+    <style>
+        body.create-table-page {
+            font-family: 'Arial', sans-serif;
+            background-color: #222;
+            color: #f0f0f0;
+            padding: 20px;
+        }
+        h1 { text-align: center; color: #f7d358; }
+        form { margin: 20px auto; width: 300px; }
+        label, select, input, button { display: block; width: 100%; margin: 10px 0; }
+        #dealCardsButton { display: none; width: 200px; margin: 20px auto; padding: 10px; font-size: 18px; cursor: pointer; text-align: center; border: none; background: #333; color: #f7d358; border-radius: 8px; transition: background 0.3s; }
+        #dealCardsButton:hover { background: #f7d358; color: #333; }
+        #bettingControls { display: none; justify-content: center; margin: 20px 0; gap: 10px; }
+        #bettingControls button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 5px; background: #4caf50; color: #fff; transition: background 0.3s; }
+        #bettingControls button:hover { background: #388e3c; }
+        #betAmount { width: 80px; text-align: center; }
+        #pokerTableContainer { margin: 30px auto; width: 800px; height: 500px; background-image: url('/images/vecteezy_poker-table-green-cloth-on-dark-background-vector-illustration_6325236.jpg'); background-size: cover; border-radius: 50% / 25%; position: relative; }
+        .seat { width: 50px; height: 50px; background-color: #ff6347; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; position: absolute; cursor: pointer; }
+        .seat:hover { background-color: #ffd700; }
+        .seat.occupied { background-color: #4caf50; cursor: not-allowed; }
+        #potDisplay { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); background-color: #333; color: #fff; border-radius: 12px; padding: 15px; font-size: 24px; }
+        .card { width: 60px; height: 80px; background: #fff; border-radius: 8px; border: 2px solid #333; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); display: flex; align-items: center; justify-content: center; color: #333; font-size: 24px; font-weight: bold; position: absolute; transform: translate(-50%, -50%) scale(0); transition: transform 0.4s; }
+        .card.deal { transform: translate(-50%, -50%) scale(1); }
+    </style>
+</head>
+<body class="create-table-page">
+    <div>
+        <h1>Create a Poker Table</h1>
+        <form id="createTableForm">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" placeholder="Enter table name" required>
+            <label for="numSeats">Number of Seats:</label>
+            <select id="numSeats"><option value="2">2 Seats</option><option value="6">6 Seats</option><option value="10">10 Seats</option></select>
+            <label for="tableType">Table Type:</label>
+            <select id="tableType"><option value="cash">Cash Game</option><option value="tournament">Tournament</option></select>
+            <button type="submit">Create Table</button>
+        </form>
+    </div>
+
+    <div id="dealCardsButton">Start Game</div>
+    <div id="pokerTableContainer">
+        <div id="potDisplay">Pot: $0</div>
+    </div>
+
+    <div id="bettingControls">
+        <input type="number" id="betAmount" placeholder="Bet Amount" value="10">
+        <button id="raiseButton">Raise</button>
+        <button id="callButton">Call</button>
+        <button id="checkButton">Check</button>
+        <button id="foldButton">Fold</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let currentPlayer = null;
+        const players = {};
+        let potAmount = 0;
+
+        const createTableForm = document.getElementById('createTableForm');
+        const pokerTableContainer = document.getElementById('pokerTableContainer');
+        const dealCardsButton = document.getElementById('dealCardsButton');
+        const bettingControls = document.getElementById('bettingControls');
+        const potDisplay = document.getElementById('potDisplay');
+
+        createTableForm.addEventListener('submit', handleCreateTable);
+
+        // Seat click handler
+        function handleSeatClick(event) {
+            const seat = event.target;
+            if (seat.classList.contains('occupied')) return;
+
+            const seatNumber = seat.getAttribute('data-seat');
+            const playerName = prompt('Enter player name:');
+            if (playerName) {
+                currentPlayer = seatNumber;
+                socket.emit('playerJoin', { seatNumber, playerName });
+            }
+        }
+
+        // Initialize the table with seats
+        function createTable(numSeats) {
+            pokerTableContainer.innerHTML = ''; // Clear existing seats
+            const xRadius = 350, yRadius = 200, centerX = pokerTableContainer.offsetWidth / 2, centerY = pokerTableContainer.offsetHeight / 2;
+
+            for (let i = 0; i < numSeats; i++) {
+                const seat = document.createElement('div');
+                seat.className = 'seat';
+                seat.textContent = `Seat ${i + 1}`;
+                seat.setAttribute('data-seat', i + 1);
+                seat.addEventListener('click', handleSeatClick);
+                pokerTableContainer.appendChild(seat);
+
+                const angle = (i / numSeats) * (2 * Math.PI);
+                seat.style.left = `${centerX + xRadius * Math.cos(angle) - 25}px`;
+                seat.style.top = `${centerY + yRadius * Math.sin(angle) - 25}px`;
+            }
+        }
+
+        // Handle table creation
+        function handleCreateTable(event) {
+            event.preventDefault();
+            const numSeats = parseInt(document.getElementById('numSeats').value);
+            createTable(numSeats);
+            dealCardsButton.style.display = 'block';
+        }
+
+        // Listen for game updates from server
+        socket.on('tableState', (state) => updateTableState(state));
+        socket.on('gameStarted', (state) => updateTableState(state));
+
+        // Update table state from server
+        function updateTableState(state) {
+            for (const [seatNumber, player] of Object.entries(state.players)) {
+                const seatElement = document.querySelector(`.seat[data-seat="${seatNumber}"]`);
+                if (seatElement) {
+                    seatElement.textContent = player.name;
+                    seatElement.classList.add('occupied');
+                }
+            }
+            potDisplay.textContent = `Pot: $${state.pot}`;
+        }
+
+        // Deal cards button
+        dealCardsButton.addEventListener('click', () => socket.emit('startGame'));
+    </script>
+</body>
+</html>
